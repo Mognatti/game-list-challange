@@ -1,7 +1,7 @@
-import GameShelf from "./components/GameShelf";
+import GameList from "./components/GameList";
 
 function App() {
-  return <GameShelf />;
+  return <GameList />;
 }
 
 export default App;
