@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { Game } from "../types";
 
 export function useFetch() {
-  const [gameList, setGameList] = useState<any>();
+  const [gameList, setGameList] = useState<Game[]>();
+  const [genreList, setGenreList] = useState<string[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const error500Range = [500, 502, 503, 504, 507, 508, 509];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,14 +22,35 @@ export function useFetch() {
           }
         );
         const data = await response.json();
-        if (data.error === "Internal Server Error") {
+
+        if (response.status === 200) {
+          setGameList(data);
           setIsLoading(false);
+          return [{ gameList, isLoading }];
+        }
+
+        if (error500Range.includes(response.status)) {
           setIsError(true);
+          setIsLoading(false);
           setErrorMessage(
             "O servidor fahou em responder, tente recarregar a página"
           );
-          console.log("Erro no servidor");
+          console.log("Erro interno do servidor");
+          console.log("Resposta da requisição: ", response);
+          return [{ isLoading, isError, errorMessage }];
         }
+
+        if (!error500Range.includes(response.status)) {
+          setIsError(true);
+          setIsLoading(false);
+          setErrorMessage(
+            "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
+          );
+          console.log("Erro interno do servidor");
+          console.log("Retorno: ", response);
+          return [{ isLoading, isError, errorMessage }];
+        }
+
         if (data.error == 'Invalid email on "dev-email-address" header') {
           setIsLoading(false);
           setIsError(true);
@@ -34,9 +58,8 @@ export function useFetch() {
             "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
           );
           console.log("erro no email");
+          return [{ isLoading, isError, errorMessage }];
         }
-        setGameList(data);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
         throw Error("Tente carregar a página!");
@@ -45,5 +68,17 @@ export function useFetch() {
     fetchData();
   }, []);
 
-  return [{ gameList, isLoading, isError, errorMessage }];
+  useEffect(() => {
+    if (gameList) {
+      const buffer: string[] = [];
+      gameList.forEach((game: Game) => {
+        if (!buffer.includes(game.genre)) {
+          buffer.push(game.genre);
+        }
+      });
+      setGenreList(buffer);
+    }
+  }, [gameList]);
+
+  return [{ gameList, genreList, isLoading, isError, errorMessage }];
 }
