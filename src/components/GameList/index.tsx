@@ -5,10 +5,11 @@ import { Game } from "../../types";
 import Card from "../Card";
 
 export default function GameList() {
-  const [{ gameList, isLoading, isError, errorMessage }]: any = useFetch();
+  const [{ gameList, genreList, isLoading, isError, errorMessage }]: any =
+    useFetch();
   const [search, setSearch] = useState("");
 
-  const filtredArray = gameList?.filter((game: Game) =>
+  const filteredArray = gameList?.filter((game: Game) =>
     game.title.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -17,14 +18,28 @@ export default function GameList() {
 
   return (
     <section>
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      ></input>
+      <S.SearchContainer>
+        <p>Filtro por gênero</p>
+        <ul>
+          {genreList.map((genre: string) => (
+            <li key={genre}>
+              <button>{genre}</button>
+            </li>
+          ))}
+        </ul>
+        <S.TextBox>
+          <S.SearchInput
+            type="text"
+            placeholder="Busca por nome..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <S.SearchIcon />
+        </S.TextBox>
+      </S.SearchContainer>
       <S.GameList>
-        {filtredArray?.map((game: Game) => {
-          return <Card {...game} />;
+        {filteredArray?.map((game: Game) => {
+          return <Card key={game.id} {...game} />;
         })}
       </S.GameList>
     </section>
