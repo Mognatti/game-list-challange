@@ -1,47 +1,33 @@
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import * as S from "../../styles/StyledComponents";
-import { Game } from "../../types";
-import Card from "../Card";
+import Search from "../Search";
+import GenreFilter from "../GenreFilter";
+import Games from "../Games";
+import Loader from "../Loader";
+import ErrorPage from "../ErrorPage";
+import Header from "../Header";
 
 export default function GameList() {
-  const [{ gameList, genreList, isLoading, isError, errorMessage }]: any =
-    useFetch();
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<string | null>(null);
 
-  const filteredArray = gameList?.filter((game: Game) =>
-    game.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const [{ gameList, genreList, isLoading, isError, errorMessage }] =
+    useFetch();
 
-  if (isError) return <p>{errorMessage}</p>;
-  if (isLoading) return <p>Carregando dados...</p>;
+  if (isError) return <ErrorPage errorMessage={errorMessage} />;
+  if (isLoading) return <Loader />;
   if (gameList && genreList)
     return (
-      <section>
-        <S.SearchContainer>
-          <p>Filtro por gênero</p>
-          <ul>
-            {genreList.map((genre: string) => (
-              <li key={genre}>
-                <button>{genre}</button>
-              </li>
-            ))}
-          </ul>
-          <S.TextBox>
-            <S.SearchInput
-              type="text"
-              placeholder="Busca por nome..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <S.SearchIcon />
-          </S.TextBox>
-        </S.SearchContainer>
-        <S.GameList>
-          {filteredArray?.map((game: Game) => {
-            return <Card key={game.id} {...game} />;
-          })}
-        </S.GameList>
-      </section>
+      <>
+        <Header />
+        <S.GameListContainer>
+          <S.SearchContainer>
+            <Search {...{ search, setSearch }} />
+            <GenreFilter {...{ filter, setFilter, genreList }} />
+          </S.SearchContainer>
+          <Games {...{ search, filter, gameList }} />
+        </S.GameListContainer>
+      </>
     );
 }
