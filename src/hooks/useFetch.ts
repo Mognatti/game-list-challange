@@ -12,6 +12,14 @@ export function useFetch() {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+
+      const timeout = setTimeout(() => {
+        setIsError(true);
+        setErrorMessage("O servidor demorou para responder, tente novamente");
+        setIsLoading(false);
+        return [{ errorMessage, isError, isLoading }];
+      }, 5000);
+
       try {
         const response = await fetch(
           "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data",
@@ -23,13 +31,15 @@ export function useFetch() {
         );
         const data = await response.json();
 
-        if (response.status === 200) {
+        if (response.ok) {
+          clearTimeout(timeout);
           setGameList(data);
           setIsLoading(false);
           return [{ gameList, isLoading }];
         }
 
         if (error500Range.includes(response.status)) {
+          clearTimeout(timeout);
           setIsError(true);
           setIsLoading(false);
           setErrorMessage(
@@ -38,9 +48,8 @@ export function useFetch() {
           console.log("Erro interno do servidor");
           console.log("Resposta da requisição: ", response);
           return [{ isLoading, isError, errorMessage }];
-        }
-
-        if (!error500Range.includes(response.status)) {
+        } else {
+          clearTimeout(timeout);
           setIsError(true);
           setIsLoading(false);
           setErrorMessage(
@@ -48,16 +57,6 @@ export function useFetch() {
           );
           console.log("Erro interno do servidor");
           console.log("Retorno: ", response);
-          return [{ isLoading, isError, errorMessage }];
-        }
-
-        if (data.error == 'Invalid email on "dev-email-address" header') {
-          setIsLoading(false);
-          setIsError(true);
-          setErrorMessage(
-            "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
-          );
-          console.log("erro no email");
           return [{ isLoading, isError, errorMessage }];
         }
       } catch (error) {
