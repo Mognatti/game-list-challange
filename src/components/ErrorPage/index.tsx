@@ -18,7 +18,8 @@ export default function ErrorPage({ errorMessage }: Props) {
       <S.ReloadPageIcon size="20" onClick={() => reloadPage()} />
       <S.MonkeyImage
         onClick={() => reloadPage()}
-        src="src/assets/error_img.png"
+        src="/images/error_img.png"
+        alt="monkey_img"
       />
       <S.ErrorMessage>{clickMonkeyMessage}</S.ErrorMessage>
     </S.ErrorPageContainer>
