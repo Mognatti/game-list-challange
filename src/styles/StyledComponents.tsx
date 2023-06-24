@@ -1,16 +1,25 @@
 import { styled } from "styled-components";
-import { BsSearch, BsArrowUpCircle } from "react-icons/bs";
+import { BsSearch, BsArrowUpCircle, BsFilter, BsInfoLg } from "react-icons/bs";
 import { AiOutlineReload } from "react-icons/ai";
+import { FiShoppingCart } from "react-icons/fi";
 
-const paleta = {
+const pallete = {
   backgroundColorLight: "rgb(229, 229, 229)",
   backgroundColorDark: "#141414",
   darkGray: "#212121",
   fontColorBlack: "#121212",
   fontColorWhite: "rgb(216, 216, 216)",
-  fontSizeTitle: "28px",
-  green: "rgb(94, 165, 96)",
   yellow: "#e8dc56",
+};
+
+const breakPoints = {
+  bigger: "1223px",
+  big: "1128px",
+  mid: "925px",
+  midSmall: "780px",
+  small: "660px",
+  smaller: "535px",
+  smallest: "455px",
 };
 
 // GameList
@@ -25,6 +34,7 @@ export const SearchContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 16px;
+  width: 100%;
   :focus {
     outline: none;
   }
@@ -36,14 +46,17 @@ export const TextBox = styled.div`
   justify-content: space-between;
   padding-bottom: 8px;
   width: 400px;
-  border-bottom: 1px solid ${paleta.yellow};
+  border-bottom: 1px solid ${pallete.yellow};
+  @media (max-width: ${breakPoints.smallest}) {
+    width: 60%;
+  }
 `;
 export const SearchInput = styled.input`
   width: 100%;
   border: none;
   background-color: transparent;
-  caret-color: ${paleta.yellow};
-  color: ${paleta.fontColorWhite};
+  caret-color: ${pallete.yellow};
+  color: ${pallete.fontColorWhite};
   font-size: 16px;
   :focus {
     outline: none;
@@ -56,26 +69,54 @@ export const GenreList = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-export const GenreListTitle = styled.p`
-  text-decoration: none;
+  padding: 0;
 `;
 export const GenreListButton = styled.button<{ clicked: boolean }>`
-  border: none;
   background-color: ${(props) =>
-    props.clicked ? `${paleta.yellow}` : `${paleta.darkGray}`};
-  border-radius: 15px;
-  padding: 8px;
-  margin-left: 8px;
-  cursor: pointer;
+    props.clicked ? `${pallete.yellow}` : `${pallete.darkGray}`};
   color: ${(props) =>
     props.clicked
-      ? `${paleta.backgroundColorDark}`
-      : `${paleta.fontColorWhite}`};
+      ? `${pallete.backgroundColorDark}`
+      : `${pallete.fontColorWhite}`};
+  border: none;
+  border-radius: 15px;
+  padding: 8px;
+  margin: 0px 4px;
+  cursor: pointer;
+
   &:hover {
-    border: 1px solid ${paleta.yellow};
+    outline: 1px solid ${pallete.yellow};
   }
 `;
+export const SelectBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  width: 400px;
+  border-bottom: 1px solid ${pallete.yellow};
+  @media (max-width: ${breakPoints.smallest}) {
+    width: 60%;
+  }
+`;
+export const GenreSelectFilter = styled.select`
+  margin-top: 16px;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: ${pallete.fontColorWhite};
+  font-size: 16px;
+  appearance: none;
+  &:focus > option {
+    background-color: ${pallete.backgroundColorDark};
+    color: ${pallete.fontColorWhite};
+  }
+  &:focus > option:checked {
+    color: ${pallete.yellow};
+  }
+`;
+export const GenreFilterIcon = styled(BsFilter)``;
 
 //Games
 export const GameList = styled.div`
@@ -89,66 +130,92 @@ export const GameList = styled.div`
 
 // Card
 export const CardContainer = styled.div`
-  background-color: ${paleta.darkGray};
+  background-color: ${pallete.darkGray};
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  padding: 16px 0px;
+  padding: 16px;
   margin: 8px 0;
   align-items: center;
   width: 30%;
-  cursor: pointer;
-  box-sizing: border-box;
-  &:hover {
-    transition: 350ms;
-    border: 1px solid ${paleta.yellow};
+  @media (max-width: ${breakPoints.bigger}) {
+    width: 40%;
   }
-`;
-export const CardContainerLink = styled.a`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+  @media (max-width: ${breakPoints.midSmall}) {
+    width: 55%;
+  }
+  @media (max-width: ${breakPoints.small}) {
+    width: 80%;
+  }
 `;
 export const CardThumb = styled.img`
   border-radius: 15px;
+  @media (max-width: ${breakPoints.mid}) {
+    width: 80%;
+  }
 `;
 export const CardTitle = styled.h3`
-  color: ${paleta.fontColorWhite};
-  border-bottom: 1px solid ${paleta.yellow};
+  color: ${pallete.fontColorWhite};
+  border-bottom: 1px solid ${pallete.yellow};
 `;
 export const CardGameInfoContainer = styled.div`
   width: 100%;
 `;
 export const CardGameInfo = styled.p`
-  color: ${paleta.fontColorWhite};
+  color: ${pallete.fontColorWhite};
   margin: 8px 24px;
 `;
-export const CardGameInfoMoreContainer = styled.div`
+export const CardGameLinkList = styled.ul`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-left: 0;
+  margin: 0;
+  width: 100%;
+`;
+export const CardGameLink = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 8px;
-  width: 100%;
+  width: 30%;
   border-radius: 15px;
 `;
-export const CardGameSummary = styled.span`
-  text-align: justify;
+export const CardGameLinkLabel = styled.label`
+  text-decoration: none;
+  color: ${pallete.fontColorWhite};
+  margin-bottom: 8px;
 `;
-export const CardTextLink = styled.a`
-  color: white;
-  border-bottom: 1px solid ${paleta.yellow};
+export const CardGameMoreInfoIcon = styled(BsInfoLg)`
+  color: ${pallete.fontColorWhite};
+  padding: 8px;
+  width: 100%;
+  border-radius: 15px;
+  border: 1px solid ${pallete.yellow};
+  &:hover {
+    background-color: ${pallete.yellow};
+    color: ${pallete.fontColorBlack};
+  }
+`;
+export const CardGameStoreIcon = styled(FiShoppingCart)`
+  color: ${pallete.fontColorWhite};
+  padding: 8px;
+  width: 100%;
+  border-radius: 15px;
+  border: 1px solid ${pallete.yellow};
+  &:hover {
+    background-color: ${pallete.yellow};
+    color: ${pallete.fontColorBlack};
+  }
 `;
 
 //Header
 export const HeaderContainer = styled.header`
   display: flex;
   position: fixed;
-  background-color: ${paleta.backgroundColorLight};
-  color: ${paleta.fontColorBlack};
+  background-color: ${pallete.backgroundColorLight};
+  color: ${pallete.fontColorBlack};
   height: 8vh;
   width: 100%;
   margin: 0;
@@ -162,12 +229,27 @@ export const HeaderList = styled.ul`
   margin: 0;
   padding: 0;
 `;
+export const HeaderTitle = styled.span`
+  font-size: 1em;
+  font-weight: 400;
+`;
 export const HeaderListItem = styled.li`
   margin-left: 16px;
+  &:nth-of-type(1) {
+    @media (max-width: ${breakPoints.smallest}) {
+      margin-left: 0px;
+      width: 100%;
+      text-align: center;
+    }
+  }
 `;
 export const ArrowUpIcon = styled(BsArrowUpCircle)`
   cursor: pointer;
   margin-right: 16px;
+  &:hover {
+    transition: 350ms;
+    opacity: 0.5;
+  }
 `;
 
 //ErrorPage
@@ -180,17 +262,33 @@ export const ErrorPageContainer = styled.div`
 `;
 export const ErrorMessage = styled.p`
   padding: 6px;
-  border-bottom: 1px solid ${paleta.yellow};
+  margin: 0;
+  text-align: center;
+  @media (max-width: ${breakPoints.smaller}) {
+    width: 80%;
+  }
 `;
-export const MonkeyFixer = styled.img`
+export const ErrorMainMessage = styled.p`
+  padding: 6px;
+  margin: 0;
+  text-align: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid ${pallete.yellow};
+  @media (max-width: ${breakPoints.smaller}) {
+    width: 80%;
+  }
+`;
+export const MonkeyImage = styled.img`
   cursor: pointer;
   padding: 16px;
   &:active {
     transition: 350ms;
     transform: scale(1.3);
   }
+  @media (max-width: ${breakPoints.smaller}) {
+    width: 80%;
+  }
 `;
-
 export const ReloadPageIcon = styled(AiOutlineReload)`
   cursor: pointer;
   animation: rotate 5s infinite;

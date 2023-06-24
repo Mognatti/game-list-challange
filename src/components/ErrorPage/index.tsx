@@ -13,14 +13,14 @@ export default function ErrorPage({ errorMessage }: Props) {
   }
   return (
     <S.ErrorPageContainer>
-      <p>{oopsMessage}</p>
-      <S.ErrorMessage>{errorMessage}</S.ErrorMessage>
+      <S.ErrorMessage>{oopsMessage}</S.ErrorMessage>
+      <S.ErrorMainMessage>{errorMessage}</S.ErrorMainMessage>
       <S.ReloadPageIcon size="20" onClick={() => reloadPage()} />
-      <S.MonkeyFixer
+      <S.MonkeyImage
         onClick={() => reloadPage()}
         src="src/assets/error_img.png"
       />
-      <p>{clickMonkeyMessage}</p>
+      <S.ErrorMessage>{clickMonkeyMessage}</S.ErrorMessage>
     </S.ErrorPageContainer>
   );
 }

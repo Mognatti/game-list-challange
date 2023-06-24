@@ -20,7 +20,7 @@ export default function Header() {
     <S.HeaderContainer>
       <S.HeaderList>
         <S.HeaderListItem>
-          <span>{headerTitle}</span>
+          <S.HeaderTitle>{headerTitle}</S.HeaderTitle>
         </S.HeaderListItem>
         {showButton && (
           <S.HeaderListItem>
