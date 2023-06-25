@@ -31,7 +31,7 @@ A aplicação possui responsividade, possuindo uma apresentação diferente no d
 ![Visão geral da página de erro](src/assets/prints/error-page.png)
 
 ### Link para acesso
-<p>O projeto já está disponível para ser acessado <a href="https://game-list-challange.vercel.app" target="_blank">clicando aqui!</a></p>
+<p>O projeto já está disponível para ser acessado <a href="https://game-list-challange.vercel.app">clicando aqui!</a> (clique com o botão do meio do mouse ou com o botao direito e selecione "Abrir em uma nova guia" para visitar o site)</p>
 
 ### 🛠 Tecnologias
 
