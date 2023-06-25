@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as S from "../../styles/StyledComponents";
 import ScrollTop from "./ScrollTop";
 
-const headerTitle = "Projeto de Estágio Frontend React - Caio Mognatti";
+const headerTitle = "Projeto de Estágio Frontend React";
 const showButtonHeight = 500;
 
 export default function Header() {

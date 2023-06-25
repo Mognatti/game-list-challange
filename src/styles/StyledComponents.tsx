@@ -83,7 +83,6 @@ export const GenreListButton = styled.button<{ clicked: boolean }>`
   padding: 8px;
   margin: 0px 4px;
   cursor: pointer;
-
   &:hover {
     outline: 1px solid ${pallete.yellow};
   }
@@ -108,6 +107,7 @@ export const GenreSelectFilter = styled.select`
   color: ${pallete.fontColorWhite};
   font-size: 16px;
   appearance: none;
+  cursor: pointer;
   &:focus > option {
     background-color: ${pallete.backgroundColorDark};
     color: ${pallete.fontColorWhite};
@@ -223,23 +223,31 @@ export const HeaderContainer = styled.header`
 `;
 export const HeaderList = styled.ul`
   display: flex;
-  width: 100%;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
   margin: 0;
   padding: 0;
+  @media (max-width: ${breakPoints.smallest}) {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
 `;
 export const HeaderTitle = styled.span`
   font-size: 1em;
   font-weight: 400;
+  text-align: center;
 `;
 export const HeaderListItem = styled.li`
   margin-left: 16px;
   &:nth-of-type(1) {
     @media (max-width: ${breakPoints.smallest}) {
-      margin-left: 0px;
-      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      width: 100%;
     }
   }
 `;
