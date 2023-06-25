@@ -8,7 +8,7 @@ interface Props {
 }
 const breakPoint = 1127;
 export default function GenreFilter({ filter, setFilter, genreList }: Props) {
-  const [clickedButton, setClicked] = useState<number | null>(null);
+  const [clickedButton, setClickedButton] = useState<number | null>(null);
   const [showHamburguer, setShowHamburguer] = useState<boolean>(false);
   const [windowSize] = useState<number>(breakPoint);
   const selectRef = useRef<HTMLSelectElement>(null);
@@ -29,10 +29,12 @@ export default function GenreFilter({ filter, setFilter, genreList }: Props) {
   const selectFilter = (genre: string, index?: number) => {
     if (filter === genre) {
       setFilter(null);
-      setClicked(null);
+      setClickedButton(null);
+      return { filter, clickedButton };
     } else {
       setFilter(genre);
-      if (index) setClicked(index);
+      if (index || index === 0) setClickedButton(index);
+      return { filter, clickedButton };
     }
   };
 
