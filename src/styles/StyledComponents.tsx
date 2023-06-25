@@ -250,6 +250,9 @@ export const HeaderListItem = styled.li`
       width: 100%;
     }
   }
+  &:nth-of-type(2) {
+    display: flex;
+  }
 `;
 export const ArrowUpIcon = styled(BsArrowUpCircle)`
   cursor: pointer;
