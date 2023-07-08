@@ -3,13 +3,18 @@ import { BsSearch, BsArrowUpCircle, BsFilter, BsInfoLg } from "react-icons/bs";
 import { AiOutlineReload } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 
-const pallete = {
+export const pallete = {
   backgroundColorLight: "rgb(229, 229, 229)",
   backgroundColorDark: "#141414",
   darkGray: "#212121",
   fontColorBlack: "#121212",
   fontColorWhite: "rgb(216, 216, 216)",
   yellow: "#e8dc56",
+};
+
+export const palleteOpacity = {
+  half: "80",
+  third: "4D",
 };
 
 const breakPoints = {
