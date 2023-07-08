@@ -1,6 +1,6 @@
-import * as S from "../../styles/StyledComponents";
+import * as S from "../../../../styles/StyledComponents";
 import dayjs from "dayjs";
-import { Game } from "../../types";
+import { Game } from "../../../../types";
 
 export default function Card(game: Game) {
   const cardInfo = [

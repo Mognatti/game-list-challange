@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import * as S from "../../styles/StyledComponents";
+import * as S from "../../../../styles/StyledComponents";
 
 interface Props {
   filter: string | null;

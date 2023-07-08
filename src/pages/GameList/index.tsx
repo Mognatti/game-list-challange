@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import * as S from "../../styles/StyledComponents";
-import Search from "../Search";
-import GenreFilter from "../GenreFilter";
-import Games from "../Games";
-import Loader from "../Loader";
+import Search from "./components/Search";
+import GenreFilter from "./components/GenreFilter";
+import Games from "./components/Games";
 import ErrorPage from "../ErrorPage";
-import Header from "../Header";
+import Header from "../../components/Header";
+import Loader from "../Loader";
 
 export default function GameList() {
   const [search, setSearch] = useState("");

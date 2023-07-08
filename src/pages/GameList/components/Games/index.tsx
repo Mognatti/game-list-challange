@@ -1,6 +1,6 @@
-import { Game } from "../../types";
+import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
-import * as S from "../../styles/StyledComponents";
+import * as S from "../../../../styles/StyledComponents";
 import Card from "../Card";
 
 interface Props {
