@@ -11,3 +11,8 @@ export type Game = {
   thumbnail: string;
   title: string;
 };
+
+export interface singupProps {
+  email: string;
+  password: string;
+}
