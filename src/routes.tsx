@@ -6,7 +6,7 @@ export default function AppRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/list" element={<GameList />}></Route>
+        <Route path="/" element={<GameList />}></Route>
         <Route path="/auth" element={<Signup />}></Route>
       </Routes>
     </Router>
