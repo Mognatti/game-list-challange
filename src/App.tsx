@@ -1,5 +1,5 @@
-import GameList from "./components/GameList";
+import AppRoutes from "./routes";
 
 export default function App() {
-  return <GameList />;
+  return <AppRoutes />;
 }
