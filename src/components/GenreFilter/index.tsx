@@ -9,20 +9,20 @@ interface Props {
 const breakPoint = 1127;
 export default function GenreFilter({ filter, setFilter, genreList }: Props) {
   const [clickedButton, setClickedButton] = useState<number | null>(null);
-  const [showHamburguer, setShowHamburguer] = useState<boolean>(false);
+  const [showSelect, setShowSelect] = useState<boolean>(false);
   const [windowSize] = useState<number>(breakPoint);
   const selectRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
     if (window.innerWidth > windowSize) {
-      setShowHamburguer(false);
+      setShowSelect(false);
     } else {
-      setShowHamburguer(true);
+      setShowSelect(true);
     }
     window.addEventListener("resize", () =>
       window.innerWidth <= windowSize
-        ? setShowHamburguer(true)
-        : setShowHamburguer(false)
+        ? setShowSelect(true)
+        : setShowSelect(false)
     );
   }, [windowSize]);
 
@@ -38,7 +38,7 @@ export default function GenreFilter({ filter, setFilter, genreList }: Props) {
     }
   };
 
-  if (showHamburguer === true) {
+  if (showSelect === true) {
     return (
       <S.SelectBox>
         <S.GenreSelectFilter
