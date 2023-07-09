@@ -8,6 +8,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<GameList />}></Route>
         <Route path="/auth" element={<Signup />}></Route>
+        <Route path="/profile" element={<p>você já está logado!</p>}></Route>
       </Routes>
     </Router>
   );
