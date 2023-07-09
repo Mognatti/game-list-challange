@@ -1,4 +1,4 @@
-import * as S from "../../styles/StyledComponents";
+import * as S from "../../../styles/StyledComponents";
 export default function ScrollTop() {
   function goTop() {
     window.scrollTo({
