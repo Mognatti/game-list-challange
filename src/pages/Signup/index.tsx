@@ -1,32 +1,49 @@
-import { useRef } from "react";
+import { useState } from "react";
 import * as S from "./styles";
+import { Navigate } from "react-router-dom";
+import useLoggedIn from "../../hooks/useLoggedIn";
 
 export default function Signup() {
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const passwordConfirmationRef = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [{ signIn, isCreating, user }] = useLoggedIn();
 
   const inputs = [
     {
       id: "email",
       label: "Email",
       type: "email",
-      ref: emailRef,
+      value: email,
+      setter: setEmail,
     },
     {
       id: "password",
       label: "Senha",
       type: "password",
-      ref: passwordRef,
+      value: password,
+      setter: setPassword,
     },
     {
       id: "password confirmation",
       label: "Confirme sua senha",
       type: "password",
-      ref: passwordConfirmationRef,
+      value: passwordConfirmation,
+      setter: setPasswordConfirmation,
     },
   ];
 
+  async function handleClick(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
+    if (password !== passwordConfirmation) {
+      alert("As senhas não são iguais!");
+    } else {
+      await signIn({ email, password });
+    }
+  }
+  if (user) return <Navigate to="/profile" />;
   return (
     <S.Container>
       <S.Form>
@@ -39,12 +56,24 @@ export default function Signup() {
           <div key={item.id}>
             <S.Label htmlFor={item.id}>{item.label}</S.Label>
             <br />
-            <S.Input type={item.type} ref={item.ref} id={item.id} required />
+            <S.Input
+              type={item.type}
+              value={item.value}
+              id={item.id}
+              onChange={(e) => item.setter(e.target.value)}
+              // required
+            />
           </div>
         ))}
-        <S.Button type="submit"> Cadastrar </S.Button>
+        <S.Button type="submit" onClick={(e) => handleClick(e)}>
+          Cadastrar
+        </S.Button>
       </S.Form>
-      <p>Já possui uma conta? Entrar</p>
+      {isCreating ? (
+        <p>Carregando dados</p>
+      ) : (
+        <p>Já possui uma conta? Entrar</p>
+      )}
     </S.Container>
   );
 }
