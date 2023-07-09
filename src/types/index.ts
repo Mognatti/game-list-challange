@@ -16,3 +16,8 @@ export interface singupProps {
   email: string;
   password: string;
 }
+
+export interface SignInProps {
+  email: string;
+  password: string;
+}
