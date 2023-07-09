@@ -12,12 +12,34 @@ export type Game = {
   title: string;
 };
 
-export interface singupProps {
+export interface CreateAccountProps {
+  inputs: loginInputType[];
   email: string;
   password: string;
+  passwordConfirmation: string;
+  signIn: ({ email, password }: SignInProps) => Promise<void>;
+  isLoading: boolean;
+  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface SignInProps {
   email: string;
   password: string;
+}
+
+export type loginInputType = {
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  setter: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export interface LoginProps {
+  inputs: loginInputType[];
+  email: string;
+  password: string;
+  logIn: ({ email, password }: SignInProps) => Promise<void>;
+  isLoading: boolean;
+  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }

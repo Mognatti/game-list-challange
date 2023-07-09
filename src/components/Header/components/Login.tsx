@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import useLoggedIn from "../../../hooks/useLoggedIn";
+import { useFirebaseAuth } from "../../../hooks/useFirebaseAuth";
 
 export default function Login() {
-  const [{ logOut }] = useLoggedIn();
+  const [{ logOut, user }] = useFirebaseAuth();
 
   function logOutHeader() {
     logOut();
@@ -11,7 +11,7 @@ export default function Login() {
   return (
     <div>
       <button>
-        <Link to="/auth">Entre</Link>
+        <Link to="/auth">{user ? "Profile" : "Entre"}</Link>
       </button>
       <button onClick={() => logOutHeader()}>Sair</button>
     </div>
