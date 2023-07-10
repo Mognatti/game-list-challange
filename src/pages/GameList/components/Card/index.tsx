@@ -2,12 +2,8 @@ import * as S from "./styles";
 import dayjs from "dayjs";
 import { Game } from "../../../../types";
 import { useState } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../../../config/firebase";
-import { Navigate } from "react-router-dom";
 
 export default function Card(game: Game) {
-  const user = auth.currentUser;
   const [favorited, setFavorited] = useState(false);
   const cardInfo = [
     `Data de lançamento: ${dayjs(game.release_date).format("DD/MM/YYYY")}`,
@@ -16,14 +12,6 @@ export default function Card(game: Game) {
     `Plataformas: ${game.platform}`,
     `Publisher: ${game.publisher}`,
   ];
-
-  async function favGame(name: string, genre: string) {
-    if (!user) {
-      alert("Você precisa entrar para favoritar itens!");
-      return <Navigate to="/auth" />;
-    }
-    setFavorited(!favorited);
-  }
 
   return (
     <S.CardContainer>
@@ -41,12 +29,12 @@ export default function Card(game: Game) {
         {favorited ? (
           <S.FilledHeartIcon
             size="25"
-            onClick={() => favGame(game.title, game.genre)}
+            onClick={() => setFavorited(!favorited)}
           />
         ) : (
           <S.OutlineHeartIcon
             size="25"
-            onClick={() => favGame(game.title, game.genre)}
+            onClick={() => setFavorited(!favorited)}
           />
         )}
         <S.CardGameLink href={game.game_url} target="_blank">
