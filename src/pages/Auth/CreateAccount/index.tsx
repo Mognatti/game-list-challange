@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CreateAccountProps } from "../../../types";
 import * as S from "../styles";
 
@@ -6,20 +7,19 @@ export default function CreateAccount({
   email,
   password,
   passwordConfirmation,
-  signIn,
+  createUser,
   isLoading,
   setLoginForm,
 }: CreateAccountProps) {
-  async function createUser(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
+  async function signIn(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     if (password !== passwordConfirmation) {
       alert("As senhas não são iguais!");
     } else {
-      await signIn({ email, password });
+      await createUser({ email, password });
     }
   }
+
   return (
     <S.Container>
       <S.Form>
@@ -41,22 +41,27 @@ export default function CreateAccount({
             />
           </div>
         ))}
-        <S.Button type="submit" onClick={(e) => createUser(e)}>
+        <S.Button type="submit" onClick={(e) => signIn(e)}>
           Cadastrar
         </S.Button>
       </S.Form>
       {isLoading ? (
         <p>Carregando dados</p>
       ) : (
-        <p>
-          Já possui uma conta?{" "}
-          <span
-            onClick={() => setLoginForm(true)}
-            style={{ cursor: "pointer" }}
-          >
-            Entrar
-          </span>
-        </p>
+        <div>
+          <p>
+            Já possui uma conta?{" "}
+            <span
+              onClick={() => setLoginForm(true)}
+              style={{ cursor: "pointer" }}
+            >
+              Entrar
+            </span>
+          </p>
+          <Link to="/">
+            <S.GoBackIcon size="20" /> Retornar
+          </Link>
+        </div>
       )}
     </S.Container>
   );

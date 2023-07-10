@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { LoginProps } from "../../../types";
 import * as S from "../styles";
 
@@ -40,15 +41,20 @@ export default function Login({
       {isLoading ? (
         <p>Entrando...</p>
       ) : (
-        <p>
-          Ainda não possui uma conta?{" "}
-          <span
-            onClick={() => setLoginForm(false)}
-            style={{ cursor: "pointer" }}
-          >
-            criar conta
-          </span>
-        </p>
+        <div>
+          <p>
+            Ainda não possui uma conta?{" "}
+            <span
+              onClick={() => setLoginForm(false)}
+              style={{ cursor: "pointer", borderBottom: "1px solid white" }}
+            >
+              Criar conta
+            </span>
+          </p>
+          <Link to="/">
+            <S.GoBackIcon size="20" /> Retornar
+          </Link>
+        </div>
       )}
     </S.Container>
   );

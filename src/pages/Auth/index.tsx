@@ -9,7 +9,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loginForm, setLoginForm] = useState(true);
-  const [{ signIn, logIn, isLoading, user }] = useFirebaseAuth();
+  const [{ createUser, logIn, isLoading, user }] = useFirebaseAuth();
 
   const inputs = [
     {
@@ -34,7 +34,7 @@ export default function Signup() {
       setter: setPasswordConfirmation,
     },
   ];
-  console.log(user);
+
   if (user) return <Navigate to="/profile" />;
   if (loginForm && !user) {
     return (
@@ -49,7 +49,7 @@ export default function Signup() {
           email,
           password,
           passwordConfirmation,
-          signIn,
+          createUser,
           isLoading,
           setLoginForm,
         }}

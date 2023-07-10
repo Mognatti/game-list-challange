@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { pallete, palleteOpacity } from "../../styles/StyledComponents";
+import { TiArrowBackOutline } from "react-icons/ti";
 
 export const Container = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 5%;
+  margin-top: 10vh;
 `;
 
 export const Form = styled.form`
@@ -43,4 +44,8 @@ export const Button = styled.button`
   border-radius: 2px;
   margin: 8px 0 8px 0;
   cursor: pointer;
+`;
+
+export const GoBackIcon = styled(TiArrowBackOutline)`
+  color: ${pallete.yellow};
 `;

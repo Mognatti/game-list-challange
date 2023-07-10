@@ -11,13 +11,12 @@ import Loader from "../Loader";
 export default function GameList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
-
   const [{ gameList, genreList, isLoading, isError, errorMessage }] =
     useFetch();
 
   if (isError) return <ErrorPage errorMessage={errorMessage} />;
   if (isLoading) return <Loader />;
-  if (gameList && genreList)
+  if (gameList && genreList) {
     return (
       <>
         <Header />
@@ -30,4 +29,5 @@ export default function GameList() {
         </S.GameListContainer>
       </>
     );
+  }
 }

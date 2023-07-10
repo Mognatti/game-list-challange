@@ -17,7 +17,7 @@ export interface CreateAccountProps {
   email: string;
   password: string;
   passwordConfirmation: string;
-  signIn: ({ email, password }: SignInProps) => Promise<void>;
+  createUser: ({ email, password }: SignInProps) => Promise<void>;
   isLoading: boolean;
   setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -45,7 +45,7 @@ export function useFetch() {
           setErrorMessage(
             "O servidor fahou em responder, tente recarregar a página"
           );
-          console.log("Erro interno do servidor");
+          console.log("Erro interno do servidor ");
           console.log("Resposta da requisição: ", response);
           return [{ isLoading, isError, errorMessage }];
         } else {
@@ -55,7 +55,7 @@ export function useFetch() {
           setErrorMessage(
             "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
           );
-          console.log("Erro interno do servidor");
+          console.log("Erro interno do servidor ");
           console.log("Retorno: ", response);
           return [{ isLoading, isError, errorMessage }];
         }
