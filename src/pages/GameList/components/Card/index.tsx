@@ -6,7 +6,12 @@ import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 
 export default function Card(game: Game) {
   const [
-    { addToFirebaseFavorites, removeFromFirebaseFavorites, firebaseFavorites },
+    {
+      addToFirebaseFavorites,
+      removeFromFirebaseFavorites,
+      firebaseFavorites,
+      user,
+    },
   ] = useFirebaseAuth();
   const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
 
@@ -19,8 +24,12 @@ export default function Card(game: Game) {
   ];
 
   async function sendData(game: Game) {
-    await addToFirebaseFavorites(game);
-    setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
+    if (!user) {
+      alert("Você não está logado");
+    } else {
+      await addToFirebaseFavorites(game);
+      setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
+    }
   }
 
   async function removeData(game: Game) {

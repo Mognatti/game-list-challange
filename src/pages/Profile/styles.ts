@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { pallete, typografy } from "../../styles/StyledComponents";
+import { pallete, typografy } from "../../styles/styleVariables";
 
 export const ProfileContainer = styled.div`
   display: flex;

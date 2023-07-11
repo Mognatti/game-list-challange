@@ -1,7 +1,6 @@
 import { useFirebaseAuth } from "../../../hooks/useFirebaseAuth";
 import { useState } from "react";
-import * as S from "../../styles";
-import { Navigate } from "react-router-dom";
+import * as S from "./styles";
 
 export default function LoginHeader() {
   const [{ logOut, user }] = useFirebaseAuth();

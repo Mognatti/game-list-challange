@@ -1,6 +1,6 @@
 import { Game, GameProps } from "../../../../types";
 import { useState, useEffect } from "react";
-import * as S from "../../../../styles/StyledComponents";
+import * as S from "./styles";
 import Card from "../Card";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 

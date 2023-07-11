@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { pallete } from "../../../../styles/StyledComponents";
+import { pallete } from "../../../../styles/styleVariables";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 export const MiniCardContainer = styled.div`

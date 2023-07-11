@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 import { BsInfoLg } from "react-icons/bs";
-import { pallete, breakPoints } from "../../../../styles/StyledComponents";
+import { pallete, breakPoints } from "../../../../styles/styleVariables";
 
 export const CardContainer = styled.div`
   background-color: ${pallete.darkGray};

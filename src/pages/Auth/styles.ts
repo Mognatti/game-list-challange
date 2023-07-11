@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { pallete, palleteOpacity } from "../../styles/StyledComponents";
+import { pallete, palleteOpacity } from "../../styles/styleVariables";
 import { TiArrowBackOutline } from "react-icons/ti";
 
 export const Container = styled.div`

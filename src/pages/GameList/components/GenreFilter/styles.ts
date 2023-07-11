@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
-import { breakPoints, pallete } from "../../../../styles/StyledComponents";
+import { breakPoints, pallete } from "../../../../styles/styleVariables";
 import { BsFilter } from "react-icons/bs";
 
 export const GenreList = styled.ul`

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import * as S from "../../styles/StyledComponents";
+import * as S from "./styles";
 import Search from "./components/Search";
 import GenreFilter from "./components/GenreFilter";
 import Games from "./components/Games";

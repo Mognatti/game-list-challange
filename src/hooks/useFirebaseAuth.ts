@@ -10,7 +10,6 @@ import {
   arrayRemove,
   arrayUnion,
   collection,
-  deleteField,
   doc,
   getDocs,
   query,

@@ -1,7 +1,15 @@
 import styled from "styled-components";
-import { pallete } from "../styles/StyledComponents";
+import { pallete } from "../../../styles/styleVariables";
 import { Link } from "react-router-dom";
+import { BsArrowUpCircle } from "react-icons/bs";
 
+export const ArrowUpIcon = styled(BsArrowUpCircle)`
+  cursor: pointer;
+  &:hover {
+    transition: 350ms;
+    opacity: 0.5;
+  }
+`;
 export const LoginContainer = styled.div`
   display: flex;
   justify-content: flex-end;

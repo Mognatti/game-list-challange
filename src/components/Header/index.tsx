@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as S from "../../styles/StyledComponents";
+import * as S from "./styles";
 import ScrollTop from "./components/ScrollTop";
 import LoginHeader from "./components/LoginHeader";
 

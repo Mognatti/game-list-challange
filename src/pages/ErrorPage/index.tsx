@@ -1,4 +1,4 @@
-import * as S from "../../styles/StyledComponents";
+import * as S from "./styles";
 
 interface Props {
   errorMessage: string;
