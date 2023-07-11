@@ -4,6 +4,7 @@ import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 import AskToLoginModal from "./components/Modal";
+import StarRating from "./components/StarRating";
 
 export default function Card(game: Game) {
   const [
@@ -69,13 +70,14 @@ export default function Card(game: Game) {
         ))}
       </S.CardGameInfoContainer>
       <S.CardGameLinkList>
-        <S.CardGameLink href={game.freetogame_profile_url} target="_blank">
+        {/* <S.CardGameLink href={game.freetogame_profile_url} target="_blank">
           <S.CardGameMoreInfoIcon size="20" />
-        </S.CardGameLink>
+        </S.CardGameLink> */}
         {favIcon}
-        <S.CardGameLink href={game.game_url} target="_blank">
+        <StarRating />
+        {/* <S.CardGameLink href={game.game_url} target="_blank">
           <S.CardGameStoreIcon size="20" />
-        </S.CardGameLink>
+        </S.CardGameLink> */}
       </S.CardGameLinkList>
       <AskToLoginModal {...{ showModal, setShowModal }} />
     </S.CardContainer>
