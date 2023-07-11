@@ -76,60 +76,6 @@ export const SearchInput = styled.input`
 `;
 export const SearchIcon = styled(BsSearch)``;
 
-//GenreFilter
-export const GenreList = styled.ul`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-`;
-export const GenreListButton = styled.button<{ clicked: boolean }>`
-  background-color: ${(props) =>
-    props.clicked ? `${pallete.yellow}` : `${pallete.darkGray}`};
-  color: ${(props) =>
-    props.clicked
-      ? `${pallete.backgroundColorDark}`
-      : `${pallete.fontColorWhite}`};
-  border: none;
-  border-radius: 15px;
-  padding: 8px;
-  margin: 0px 4px;
-  cursor: pointer;
-  &:hover {
-    outline: 1px solid ${pallete.yellow};
-  }
-`;
-export const SelectBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 8px;
-  width: 400px;
-  border-bottom: 1px solid ${pallete.yellow};
-  @media (max-width: ${breakPoints.smallest}) {
-    width: 60%;
-  }
-`;
-export const GenreSelectFilter = styled.select`
-  margin-top: 16px;
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  color: ${pallete.fontColorWhite};
-  font-size: 16px;
-  appearance: none;
-  cursor: pointer;
-  &:focus > option {
-    background-color: ${pallete.backgroundColorDark};
-    color: ${pallete.fontColorWhite};
-  }
-  &:focus > option:checked {
-    color: ${pallete.yellow};
-  }
-`;
-export const GenreFilterIcon = styled(BsFilter)``;
-
 //Games
 export const GameList = styled.div`
   display: flex;

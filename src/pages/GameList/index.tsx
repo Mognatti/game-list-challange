@@ -11,6 +11,7 @@ import Loader from "../Loader";
 export default function GameList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
+  const [isFilterFav, setIsFilterFav] = useState<boolean>(false);
   const [{ gameList, genreList, isLoading, isError, errorMessage }] =
     useFetch();
 
@@ -23,9 +24,11 @@ export default function GameList() {
         <S.GameListContainer>
           <S.SearchContainer>
             <Search {...{ search, setSearch }} />
-            <GenreFilter {...{ filter, setFilter, genreList }} />
+            <GenreFilter
+              {...{ filter, setFilter, isFilterFav, setIsFilterFav, genreList }}
+            />
           </S.SearchContainer>
-          <Games {...{ search, filter, gameList }} />
+          <Games {...{ search, filter, isFilterFav, gameList }} />
         </S.GameListContainer>
       </>
     );

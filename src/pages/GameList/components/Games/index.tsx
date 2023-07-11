@@ -2,15 +2,23 @@ import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
 import * as S from "../../../../styles/StyledComponents";
 import Card from "../Card";
+import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 
 interface Props {
   search: string;
   filter: string | null;
   gameList: Game[];
+  isFilterFav: boolean;
 }
 
-export default function Games({ search, filter, gameList }: Props) {
+export default function Games({
+  search,
+  filter,
+  isFilterFav,
+  gameList,
+}: Props) {
   const [filteredList, setFilteredList] = useState<Game[]>();
+  const [{ firebaseFavorites }] = useFirebaseAuth();
 
   const searchGame = (gameTitle: string) => {
     const reg = new RegExp(search, "i");
@@ -23,13 +31,21 @@ export default function Games({ search, filter, gameList }: Props) {
     }
     return true;
   };
-
   useEffect(() => {
-    const newGameList = gameList.filter(
-      (game) => searchGame(game.title) && filterGame(game.genre)
-    );
-    setFilteredList(newGameList);
-  }, [search, filter]);
+    if (isFilterFav) {
+      const filteredFavs = firebaseFavorites.flatMap((item) =>
+        item.favorites.filter(
+          (game) => searchGame(game.title) && filterGame(game.genre)
+        )
+      );
+      setFilteredList(filteredFavs);
+    } else {
+      const newGameList = gameList.filter(
+        (game) => searchGame(game.title) && filterGame(game.genre)
+      );
+      setFilteredList(newGameList);
+    }
+  }, [search, filter, isFilterFav]);
 
   return (
     <S.GameList>

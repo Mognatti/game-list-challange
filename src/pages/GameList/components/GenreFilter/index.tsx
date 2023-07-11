@@ -1,17 +1,28 @@
 import { useState, useEffect, useRef } from "react";
-import * as S from "../../../../styles/StyledComponents";
+import * as S from "./styles";
+import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
+import { Game } from "../../../../types";
 
 interface Props {
   filter: string | null;
   setFilter: React.Dispatch<React.SetStateAction<string | null>>;
+  isFilterFav: boolean;
+  setIsFilterFav: React.Dispatch<React.SetStateAction<boolean>>;
   genreList: string[];
 }
 const breakPoint = 1127;
-export default function GenreFilter({ filter, setFilter, genreList }: Props) {
+export default function GenreFilter({
+  filter,
+  setFilter,
+  isFilterFav,
+  setIsFilterFav,
+  genreList,
+}: Props) {
   const [clickedButton, setClickedButton] = useState<number | null>(null);
   const [showSelect, setShowSelect] = useState<boolean>(false);
   const [windowSize] = useState<number>(breakPoint);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const [{ firebaseFavorites }] = useFirebaseAuth();
 
   useEffect(() => {
     if (window.innerWidth > windowSize) {
@@ -35,6 +46,16 @@ export default function GenreFilter({ filter, setFilter, genreList }: Props) {
       setFilter(genre);
       if (index || index === 0) setClickedButton(index);
       return { filter, clickedButton };
+    }
+  };
+
+  const filterFavorite = () => {
+    if (isFilterFav) {
+      setIsFilterFav(false);
+      return isFilterFav;
+    } else {
+      setIsFilterFav(true);
+      return isFilterFav;
     }
   };
 
@@ -70,6 +91,9 @@ export default function GenreFilter({ filter, setFilter, genreList }: Props) {
             {genre}
           </S.GenreListButton>
         ))}
+        <S.GenreListButton onClick={() => filterFavorite()}>
+          Favortios <S.FavFilter size="20" />
+        </S.GenreListButton>
       </S.GenreList>
     );
   }
