@@ -43,3 +43,8 @@ export interface LoginProps {
   isLoading: boolean;
   setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export interface FirebaseFavorite {
+  favorites: Game[];
+  uuid: string;
+}

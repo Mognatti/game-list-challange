@@ -26,6 +26,14 @@ export const breakPoints = {
   smallest: "455px",
 };
 
+export const typografy = {
+  fontSize: {
+    title: "24px",
+    regular: "16px",
+    small: "12px",
+  },
+};
+
 // GameList
 export const GameListContainer = styled.div`
   margin-top: 10vh;
@@ -144,6 +152,7 @@ export const HeaderContainer = styled.header`
   width: 100%;
   margin: 0;
   padding: 0;
+  z-index: 100;
 `;
 export const HeaderList = styled.ul`
   display: flex;

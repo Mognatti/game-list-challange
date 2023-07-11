@@ -1,6 +1,7 @@
 import { useFirebaseAuth } from "../../../hooks/useFirebaseAuth";
 import { useState } from "react";
 import * as S from "../../styles";
+import { Navigate } from "react-router-dom";
 
 export default function LoginHeader() {
   const [{ logOut, user }] = useFirebaseAuth();
@@ -22,10 +23,12 @@ export default function LoginHeader() {
       />
       <S.LoginMenuContainer display={showModal}>
         <S.LoginMenuDiv>
-          <S.LinkButton to="/auth">
+          <S.LinkButton to={user ? "/profile" : "/auth"}>
             <S.LoginButton>{user ? "Perfil" : "Entre"}</S.LoginButton>
           </S.LinkButton>
-
+          <S.LinkButton to="/">
+            <S.LoginButton>Lista</S.LoginButton>
+          </S.LinkButton>
           {user && (
             <S.LogoutButton onClick={() => logOutHeader()}>Sair</S.LogoutButton>
           )}

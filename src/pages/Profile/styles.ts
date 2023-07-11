@@ -1,24 +1,55 @@
 import styled from "styled-components";
-import { pallete } from "../../styles/StyledComponents";
+import { pallete, typografy } from "../../styles/StyledComponents";
 
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-top: 10vh;
+  margin: 10vh 5% 0px 5%;
+  width: 90%;
 `;
 
-export const NavigateListButton = styled.button`
-  background-color: transparent;
-  outline: 1px solid ${pallete.yellow};
-  color: ${pallete.fontColorWhite};
+export const ProfileHeader = styled.div`
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  border-bottom: 1px solid ${pallete.yellow};
+`;
+
+export const ProfileInfoContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const ProfileImg = styled.img`
+  width: 10%;
   padding: 8px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${pallete.yellow};
-    color: ${pallete.fontColorBlack};
-  }
+`;
+
+export const ProfileData = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const ListSectionTitle = styled.div`
+  padding: 16px;
+  font-size: ${typografy.fontSize.title};
+  text-align: center;
+`;
+
+export const FavortiesList = styled.ul`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+  gap: 16px;
+  margin: 0;
+  margin-bottom: 2%;
 `;

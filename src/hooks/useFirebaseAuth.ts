@@ -6,13 +6,26 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { SignInProps } from "../types";
+import {
+  arrayRemove,
+  arrayUnion,
+  collection,
+  deleteField,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { FirebaseFavorite, Game, SignInProps } from "../types";
 
 export function useFirebaseAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<string | null | undefined>(null);
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const [firebaseFavorites, setFirebaseFavorites] = useState<
+    FirebaseFavorite[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -22,11 +35,10 @@ export function useFirebaseAuth() {
         setUserId(user?.uid);
       }
     }
-
     async function queryData(id: string) {
-      const userRef = collection(db, "user");
-      const q = query(userRef, where("uuid", "==", id));
-      const querySnapshot = await getDocs(q);
+      const userCollectionRef = collection(db, "user");
+      const userIdDbQuery = query(userCollectionRef, where("uuid", "==", id));
+      const querySnapshot = await getDocs(userIdDbQuery);
       if (querySnapshot) {
         const buffer: any[] = [];
         querySnapshot.forEach((doc) => {
@@ -34,20 +46,66 @@ export function useFirebaseAuth() {
             buffer.push(doc.data());
           }
         });
-        setFavorites(buffer);
+        setFirebaseFavorites(buffer);
       }
     }
     checkCurrentUser();
     if (userId) queryData(userId);
   }, [user, userId]);
 
+  async function addToFirebaseFavorites(game: Game) {
+    if (userId) {
+      const userDocumentRef = doc(db, "user", userId);
+      await updateDoc(userDocumentRef, {
+        favorites: arrayUnion({
+          id: game.id,
+          title: game.title,
+          developer: game.developer,
+          freetogame_profile_url: game.freetogame_profile_url,
+          game_url: game.game_url,
+          genre: game.genre,
+          platform: game.platform,
+          publisher: game.publisher,
+          release_date: game.release_date,
+          short_description: game.short_description,
+          thumbnail: game.thumbnail,
+        }),
+      });
+    }
+  }
+
+  async function removeFromFirebaseFavorites(game: Game) {
+    if (userId) {
+      const userDocumentRef = doc(db, "user", userId);
+      await updateDoc(userDocumentRef, {
+        favorites: arrayRemove({
+          id: game.id,
+          title: game.title,
+          developer: game.developer,
+          freetogame_profile_url: game.freetogame_profile_url,
+          game_url: game.game_url,
+          genre: game.genre,
+          platform: game.platform,
+          publisher: game.publisher,
+          release_date: game.release_date,
+          short_description: game.short_description,
+          thumbnail: game.thumbnail,
+        }),
+      });
+    }
+  }
+
   async function createUser({ email, password }: SignInProps) {
     try {
       setIsLoading(true);
       const res = await createUserWithEmailAndPassword(auth, email, password);
       if (res.user) {
-        setIsLoading(false);
         setUser(res.user);
+        await setDoc(doc(db, "user", userId!), {
+          favorites: [{}],
+          uuid: userId,
+        });
+        setIsLoading(false);
       }
     } catch (error: any) {
       const errorCode = error.code;
@@ -81,7 +139,19 @@ export function useFirebaseAuth() {
     }
   }
 
-  console.log("user>", user, "favorites:", favorites);
+  //remover antes da entrega
+  console.log("user: ", user, "favorites: ", firebaseFavorites);
 
-  return [{ createUser, logIn, logOut, isLoading, user, favorites }];
+  return [
+    {
+      createUser,
+      logIn,
+      logOut,
+      addToFirebaseFavorites,
+      removeFromFirebaseFavorites,
+      isLoading,
+      user,
+      firebaseFavorites,
+    },
+  ];
 }

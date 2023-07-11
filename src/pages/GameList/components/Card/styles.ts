@@ -87,7 +87,6 @@ export const CardGameStoreIcon = styled(FiShoppingCart)`
 export const OutlineHeartIcon = styled(AiOutlineHeart)`
   border-radius: 50%;
   padding: 8px;
-  outline: 2px solid red;
   color: ${pallete.yellow};
   cursor: pointer;
   &:hover {
@@ -100,8 +99,7 @@ export const FilledHeartIcon = styled(AiFillHeart)`
   border-radius: 50%;
   padding: 8px;
   cursor: pointer;
-  outline: 2px solid ${pallete.yellow};
-  color: ${pallete.yellow};
+  color: red;
   cursor: pointer;
   &:hover {
     outline: 2px solid red;
