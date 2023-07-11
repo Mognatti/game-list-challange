@@ -23,7 +23,7 @@ export default function LoginHeader() {
       <S.LoginMenuContainer display={showModal}>
         <S.LoginMenuDiv>
           <S.LinkButton to={user ? "/profile" : "/auth"}>
-            <S.LoginButton>{user ? "Perfil" : "Entre"}</S.LoginButton>
+            <S.LoginButton>{user ? "Perfil" : "Entrar"}</S.LoginButton>
           </S.LinkButton>
           <S.LinkButton to="/">
             <S.LoginButton>Lista</S.LoginButton>

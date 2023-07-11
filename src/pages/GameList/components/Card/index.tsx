@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
+import AskToLoginModal from "./components/Modal";
 
 export default function Card(game: Game) {
   const [
@@ -14,7 +15,7 @@ export default function Card(game: Game) {
     },
   ] = useFirebaseAuth();
   const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
-
+  const [showModal, setShowModal] = useState(false);
   const cardInfo = [
     `Data de lançamento: ${dayjs(game.release_date).format("DD/MM/YYYY")}`,
     `Gênero: ${game.genre}`,
@@ -25,7 +26,7 @@ export default function Card(game: Game) {
 
   async function sendData(game: Game) {
     if (!user) {
-      alert("Você não está logado");
+      setShowModal(true);
     } else {
       await addToFirebaseFavorites(game);
       setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
@@ -37,27 +38,27 @@ export default function Card(game: Game) {
     setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
   }
 
-  const isFavorite = (id: number): boolean => {
-    for (const item of firebaseFavorites) {
-      for (const favorite of item.favorites) {
-        if (favorite.id === id) {
-          return true;
+  useEffect(() => {
+    const isFavorite = (id: number): boolean => {
+      for (const item of firebaseFavorites) {
+        if (item.favorites && Array.isArray(item.favorites)) {
+          for (const favorite of item.favorites) {
+            if (favorite.id === id) {
+              return true;
+            }
+          }
         }
       }
-    }
-    return false;
-  };
-
-  useEffect(() => {
+      return false;
+    };
     setMarkedAsFavorited(isFavorite(game.id));
-  }, [firebaseFavorites]);
+  }, [firebaseFavorites, game.id]);
 
   const favIcon = markedAsFavorited ? (
     <S.FilledHeartIcon size="25" onClick={() => removeData(game)} />
   ) : (
     <S.OutlineHeartIcon size="25" onClick={() => sendData(game)} />
   );
-
   return (
     <S.CardContainer>
       <S.CardThumb src={game.thumbnail} alt={`Imagem do jogo ${game.title}`} />
@@ -76,6 +77,7 @@ export default function Card(game: Game) {
           <S.CardGameStoreIcon size="20" />
         </S.CardGameLink>
       </S.CardGameLinkList>
+      <AskToLoginModal {...{ showModal, setShowModal }} />
     </S.CardContainer>
   );
 }

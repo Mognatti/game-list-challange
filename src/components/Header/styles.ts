@@ -4,8 +4,8 @@ import { breakPoints, pallete } from "../../styles/styleVariables";
 export const HeaderContainer = styled.header`
   display: flex;
   position: fixed;
-  background-color: ${pallete.backgroundColorLight};
-  color: ${pallete.fontColorBlack};
+  background-color: #272a2c;
+  color: ${pallete.fontColorWhite};
   height: 8vh;
   width: 100%;
   margin: 0;

@@ -1,9 +1,9 @@
 export const pallete = {
-  backgroundColorLight: "rgb(229, 229, 229)",
+  backgroundColorLight: "#e5e5e5",
   backgroundColorDark: "#141414",
   darkGray: "#212121",
   fontColorBlack: "#121212",
-  fontColorWhite: "rgb(216, 216, 216)",
+  fontColorWhite: "#d8d8d8",
   yellow: "#e8dc56",
 };
 

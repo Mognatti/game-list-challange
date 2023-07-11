@@ -100,9 +100,8 @@ export function useFirebaseAuth() {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       if (res.user) {
         setUser(res.user);
-        await setDoc(doc(db, "user", userId!), {
-          favorites: [{}],
-          uuid: userId,
+        await setDoc(doc(db, "user", res.user.uid), {
+          uuid: res.user.uid,
         });
         setIsLoading(false);
       }

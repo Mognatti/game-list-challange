@@ -25,7 +25,13 @@ export default function GameList() {
           <S.SearchContainer>
             <Search {...{ search, setSearch }} />
             <GenreFilter
-              {...{ filter, setFilter, isFilterFav, setIsFilterFav, genreList }}
+              {...{
+                filter,
+                setFilter,
+                isFilterFav,
+                setIsFilterFav,
+                genreList,
+              }}
             />
           </S.SearchContainer>
           <Games {...{ search, filter, isFilterFav, gameList }} />
