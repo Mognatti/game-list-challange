@@ -48,3 +48,18 @@ export interface FirebaseFavorite {
   favorites: Game[];
   uuid: string;
 }
+
+export interface GameProps {
+  search: string;
+  filter: string | null;
+  gameList: Game[];
+  isFilterFav: boolean;
+}
+
+export interface GameFilterProps {
+  filter: string | null;
+  setFilter: React.Dispatch<React.SetStateAction<string | null>>;
+  isFilterFav: boolean;
+  setIsFilterFav: React.Dispatch<React.SetStateAction<boolean>>;
+  genreList: string[];
+}

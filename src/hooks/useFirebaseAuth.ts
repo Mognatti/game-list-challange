@@ -139,9 +139,6 @@ export function useFirebaseAuth() {
     }
   }
 
-  //remover antes da entrega
-  console.log("user: ", user, "favorites: ", firebaseFavorites);
-
   return [
     {
       createUser,

@@ -1,15 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import * as S from "./styles";
-import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
-import { Game } from "../../../../types";
+import { GameFilterProps } from "../../../../types";
 
-interface Props {
-  filter: string | null;
-  setFilter: React.Dispatch<React.SetStateAction<string | null>>;
-  isFilterFav: boolean;
-  setIsFilterFav: React.Dispatch<React.SetStateAction<boolean>>;
-  genreList: string[];
-}
 const breakPoint = 1127;
 export default function GenreFilter({
   filter,
@@ -17,12 +9,11 @@ export default function GenreFilter({
   isFilterFav,
   setIsFilterFav,
   genreList,
-}: Props) {
+}: GameFilterProps) {
   const [clickedButton, setClickedButton] = useState<number | null>(null);
   const [showSelect, setShowSelect] = useState<boolean>(false);
   const [windowSize] = useState<number>(breakPoint);
   const selectRef = useRef<HTMLSelectElement>(null);
-  const [{ firebaseFavorites }] = useFirebaseAuth();
 
   useEffect(() => {
     if (window.innerWidth > windowSize) {
@@ -59,13 +50,23 @@ export default function GenreFilter({
     }
   };
 
+  function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+    if (e.target.value === "favoritos") {
+      setIsFilterFav(!isFilterFav);
+      setFilter(null);
+    } else {
+      selectFilter(e.target.value);
+      setIsFilterFav(false);
+    }
+  }
+
   if (showSelect === true) {
     return (
       <S.SelectBox>
         <S.GenreSelectFilter
           id="selectGenre"
           ref={selectRef}
-          onChange={(e) => selectFilter(e.target.value)}
+          onChange={(e) => handleSelect(e)}
         >
           <option value={selectRef.current?.value}>
             Filtrar por gênero...
@@ -75,6 +76,10 @@ export default function GenreFilter({
               {genre}
             </option>
           ))}
+          <option value={"favoritos"}>
+            Favoritos
+            <S.FavFilter />
+          </option>
         </S.GenreSelectFilter>
         <S.GenreFilterIcon size="20" />
       </S.SelectBox>
@@ -91,7 +96,10 @@ export default function GenreFilter({
             {genre}
           </S.GenreListButton>
         ))}
-        <S.GenreListButton onClick={() => filterFavorite()}>
+        <S.GenreListButton
+          clicked={isFilterFav}
+          onClick={() => filterFavorite()}
+        >
           Favortios <S.FavFilter size="20" />
         </S.GenreListButton>
       </S.GenreList>

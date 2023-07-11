@@ -1,22 +1,15 @@
-import { Game } from "../../../../types";
+import { Game, GameProps } from "../../../../types";
 import { useState, useEffect } from "react";
 import * as S from "../../../../styles/StyledComponents";
 import Card from "../Card";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
-
-interface Props {
-  search: string;
-  filter: string | null;
-  gameList: Game[];
-  isFilterFav: boolean;
-}
 
 export default function Games({
   search,
   filter,
   isFilterFav,
   gameList,
-}: Props) {
+}: GameProps) {
   const [filteredList, setFilteredList] = useState<Game[]>();
   const [{ firebaseFavorites }] = useFirebaseAuth();
 
