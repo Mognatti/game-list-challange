@@ -6,7 +6,14 @@ import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 import AskToLoginModal from "./components/Modal";
 import StarRating from "./components/StarRating";
 
-export default function Card(game: Game) {
+export interface CardProps {
+  game: Game;
+}
+
+export default function Card({ game }: CardProps) {
+  const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
+  const [isHover, setIsHover] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [
     {
       addToFirebaseFavorites,
@@ -15,8 +22,7 @@ export default function Card(game: Game) {
       user,
     },
   ] = useFirebaseAuth();
-  const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
-  const [showModal, setShowModal] = useState(false);
+
   const cardInfo = [
     `Data de lançamento: ${dayjs(game.release_date).format("DD/MM/YYYY")}`,
     `Gênero: ${game.genre}`,
@@ -24,20 +30,6 @@ export default function Card(game: Game) {
     `Plataformas: ${game.platform}`,
     `Publisher: ${game.publisher}`,
   ];
-
-  async function sendData(game: Game) {
-    if (!user) {
-      setShowModal(true);
-    } else {
-      await addToFirebaseFavorites(game);
-      setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
-    }
-  }
-
-  async function removeData(game: Game) {
-    await removeFromFirebaseFavorites(game);
-    setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
-  }
 
   useEffect(() => {
     const isFavorite = (id: number): boolean => {
@@ -55,26 +47,48 @@ export default function Card(game: Game) {
     setMarkedAsFavorited(isFavorite(game.id));
   }, [firebaseFavorites, game.id]);
 
+  async function sendData(game: Game) {
+    if (!user) {
+      setShowModal(true);
+    } else {
+      await addToFirebaseFavorites(game);
+      setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
+    }
+  }
+
+  async function removeData(game: Game) {
+    await removeFromFirebaseFavorites(game);
+    setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
+  }
+
   const favIcon = markedAsFavorited ? (
     <S.FilledHeartIcon size="25" onClick={() => removeData(game)} />
   ) : (
     <S.OutlineHeartIcon size="25" onClick={() => sendData(game)} />
   );
+
   return (
-    <S.CardContainer>
+    <S.CardContainer
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
       <S.CardThumb src={game.thumbnail} alt={`Imagem do jogo ${game.title}`} />
       <S.CardTitle>{game.title}</S.CardTitle>
-      <S.CardGameInfoContainer>
-        {cardInfo.map((info) => (
-          <S.CardGameInfo key={info}>{info}</S.CardGameInfo>
-        ))}
-      </S.CardGameInfoContainer>
+      {isHover ? (
+        <S.CardGameInfoContainer>
+          {cardInfo.map((info) => (
+            <S.CardGameInfo key={info}>{info}</S.CardGameInfo>
+          ))}
+        </S.CardGameInfoContainer>
+      ) : (
+        cardInfo.filter((info) => info.includes("Gênero"))
+      )}
       <S.CardGameLinkList>
         {/* <S.CardGameLink href={game.freetogame_profile_url} target="_blank">
           <S.CardGameMoreInfoIcon size="20" />
         </S.CardGameLink> */}
         {favIcon}
-        <StarRating />
+        <StarRating id={game.id} {...{ setShowModal }} />
         {/* <S.CardGameLink href={game.game_url} target="_blank">
           <S.CardGameStoreIcon size="20" />
         </S.CardGameLink> */}

@@ -5,6 +5,7 @@ import { pallete } from "../../../../../../styles/styleVariables";
 export const FilledStarIcon = styled(BsStarFill)`
   color: ${pallete.yellow};
   padding: 2px;
+  cursor: pointer;
 `;
 
 export const HalfStarIcon = styled(BsStarHalf)`
@@ -15,6 +16,7 @@ export const HalfStarIcon = styled(BsStarHalf)`
 export const OutlinedStarIcon = styled(BsStar)`
   color: ${pallete.yellow};
   padding: 2px;
+  cursor: pointer;
 `;
 
 export const StarContainer = styled.ul`

@@ -54,6 +54,7 @@ export interface GameProps {
   filter: string | null;
   gameList: Game[];
   isFilterFav: boolean;
+  sortByRating: boolean;
 }
 
 export interface GameFilterProps {

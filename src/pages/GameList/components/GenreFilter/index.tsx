@@ -76,10 +76,7 @@ export default function GenreFilter({
               {genre}
             </option>
           ))}
-          <option value={"favoritos"}>
-            Favoritos
-            <S.FavFilter />
-          </option>
+          <option value={"favoritos"}>Favoritos</option>
         </S.GenreSelectFilter>
         <S.GenreFilterIcon size="20" />
       </S.SelectBox>

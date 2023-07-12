@@ -5,14 +5,20 @@ import { BsInfoLg } from "react-icons/bs";
 import { pallete, breakPoints } from "../../../../styles/styleVariables";
 
 export const CardContainer = styled.div`
-  background-color: ${pallete.darkGray};
-  border-radius: 15px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  margin: 8px 0;
   align-items: center;
-  width: 30%;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  transition: 350ms;
+  width: 400px;
+  height: 500px;
+  &:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 12px 5px ${pallete.darkGray};
+    transition: 350ms;
+  }
   @media (max-width: ${breakPoints.bigger}) {
     width: 40%;
   }
@@ -24,7 +30,8 @@ export const CardContainer = styled.div`
   }
 `;
 export const CardThumb = styled.img`
-  border-radius: 15px;
+  border-radius: 8px;
+  padding: 8px;
   @media (max-width: ${breakPoints.mid}) {
     width: 80%;
   }
@@ -34,7 +41,14 @@ export const CardTitle = styled.h3`
   border-bottom: 1px solid ${pallete.yellow};
 `;
 export const CardGameInfoContainer = styled.div`
-  width: 100%;
+  opacity: 0;
+  height: 0;
+  transition: 350ms ease-in-out;
+  ${CardContainer}:hover & {
+    transition: 350ms ease-in-out;
+    opacity: 1;
+    height: 100%;
+  }
 `;
 export const CardGameInfo = styled.p`
   color: ${pallete.fontColorWhite};
@@ -90,8 +104,7 @@ export const OutlineHeartIcon = styled(AiOutlineHeart)`
   color: ${pallete.yellow};
   cursor: pointer;
   &:hover {
-    outline: 2px solid ${pallete.yellow};
-    color: ${pallete.yellow};
+    color: red;
   }
 `;
 
@@ -101,7 +114,4 @@ export const FilledHeartIcon = styled(AiFillHeart)`
   cursor: pointer;
   color: red;
   cursor: pointer;
-  &:hover {
-    outline: 2px solid red;
-  }
 `;

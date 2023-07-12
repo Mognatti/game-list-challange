@@ -11,6 +11,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   setDoc,
@@ -25,6 +26,7 @@ export function useFirebaseAuth() {
   const [firebaseFavorites, setFirebaseFavorites] = useState<
     FirebaseFavorite[]
   >([]);
+  const [firebaseRatedGames, setFirebaseRatedGames] = useState<any[]>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -48,8 +50,21 @@ export function useFirebaseAuth() {
         setFirebaseFavorites(buffer);
       }
     }
+    async function fetchRatedGames() {
+      if (userId) {
+        const userDocumentRef = doc(db, "user", userId);
+        const userSnapshot = await getDoc(userDocumentRef);
+
+        if (userSnapshot.exists()) {
+          const userDocData = userSnapshot.data();
+          const ratedGamesData = userDocData.ratedGames || [];
+          setFirebaseRatedGames(ratedGamesData);
+        }
+      }
+    }
     checkCurrentUser();
     if (userId) queryData(userId);
+    fetchRatedGames();
   }, [user, userId]);
 
   async function addToFirebaseFavorites(game: Game) {
@@ -73,6 +88,34 @@ export function useFirebaseAuth() {
     }
   }
 
+  async function postRating(ratingScore: number | null, gameId: number) {
+    if (userId) {
+      const userDocumentRef = doc(db, "user", userId);
+      const userSnapshot = await getDoc(userDocumentRef);
+
+      if (userSnapshot.exists()) {
+        const userDocData = userSnapshot.data();
+        const ratedGames = userDocData.ratedGames || [];
+
+        let updated = false;
+        for (let i = 0; i < ratedGames.length; i++) {
+          if (ratedGames[i].id === gameId) {
+            ratedGames[i].score = ratingScore;
+            updated = true;
+            break;
+          }
+        }
+
+        if (updated) {
+          await updateDoc(userDocumentRef, { ratedGames });
+        } else {
+          await updateDoc(userDocumentRef, {
+            ratedGames: arrayUnion({ id: gameId, score: ratingScore }),
+          });
+        }
+      }
+    }
+  }
   async function removeFromFirebaseFavorites(game: Game) {
     if (userId) {
       const userDocumentRef = doc(db, "user", userId);
@@ -143,10 +186,12 @@ export function useFirebaseAuth() {
       logIn,
       logOut,
       addToFirebaseFavorites,
+      postRating,
       removeFromFirebaseFavorites,
       isLoading,
       user,
       firebaseFavorites,
+      firebaseRatedGames,
     },
   ];
 }

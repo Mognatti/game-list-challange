@@ -7,11 +7,14 @@ import Games from "./components/Games";
 import ErrorPage from "../ErrorPage";
 import Header from "../../components/Header";
 import Loader from "../Loader";
+import Banner from "./components/Banner";
+import RatingFilter from "./components/RatingFilter";
 
 export default function GameList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
   const [isFilterFav, setIsFilterFav] = useState<boolean>(false);
+  const [sortByRating, setSortByRating] = useState(false);
   const [{ gameList, genreList, isLoading, isError, errorMessage }] =
     useFetch();
 
@@ -21,9 +24,13 @@ export default function GameList() {
     return (
       <>
         <Header />
+        <Banner />
         <S.GameListContainer>
           <S.SearchContainer>
-            <Search {...{ search, setSearch }} />
+            <div style={{ display: "flex" }}>
+              <Search {...{ search, setSearch }} />
+              <RatingFilter {...{ sortByRating, setSortByRating }} />
+            </div>
             <GenreFilter
               {...{
                 filter,
@@ -34,7 +41,7 @@ export default function GameList() {
               }}
             />
           </S.SearchContainer>
-          <Games {...{ search, filter, isFilterFav, gameList }} />
+          <Games {...{ search, filter, isFilterFav, sortByRating, gameList }} />
         </S.GameListContainer>
       </>
     );
