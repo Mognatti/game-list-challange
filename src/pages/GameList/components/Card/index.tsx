@@ -1,5 +1,4 @@
 import * as S from "./styles";
-import dayjs from "dayjs";
 import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
@@ -23,10 +22,19 @@ export default function Card({ game }: CardProps) {
     },
   ] = useFirebaseAuth();
 
+  const cardSmallerInfo = [game.publisher, game.platform];
   const cardHiddenInfo = [
-    `Data de lançamento: ${dayjs(game.release_date).format("DD/MM/YYYY")}`,
-    `Produtora: ${game.developer}`,
-    `Plataformas: ${game.platform}`,
+    {
+      icon: (
+        <S.CardGameMoreInfoIcon key={game.freetogame_profile_url} size="20" />
+      ),
+      url: game.freetogame_profile_url,
+    },
+    {
+      icon: <S.CardGameStoreIcon key={game.game_url} size="20" />,
+      url: game.game_url,
+      key: 90987,
+    },
   ];
 
   useEffect(() => {
@@ -45,24 +53,24 @@ export default function Card({ game }: CardProps) {
     setMarkedAsFavorited(isFavorite(game.id));
   }, [firebaseFavorites, game.id]);
 
-  async function sendData(game: Game) {
+  async function favoriteSetter(game: Game) {
     if (!user) {
       setShowModal(true);
     } else {
       await addToFirebaseFavorites(game);
-      setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
+      setMarkedAsFavorited(!markedAsFavorited);
     }
   }
 
-  async function removeData(game: Game) {
+  async function favoriteRemover(game: Game) {
     await removeFromFirebaseFavorites(game);
-    setMarkedAsFavorited((prevMarkedAsFavorited) => !prevMarkedAsFavorited);
+    setMarkedAsFavorited(!markedAsFavorited);
   }
 
   const favIcon = markedAsFavorited ? (
-    <S.FilledHeartIcon size="25" onClick={() => removeData(game)} />
+    <S.FilledHeartIcon size="25" onClick={() => favoriteRemover(game)} />
   ) : (
-    <S.OutlineHeartIcon size="25" onClick={() => sendData(game)} />
+    <S.OutlineHeartIcon size="25" onClick={() => favoriteSetter(game)} />
   );
 
   return (
@@ -79,38 +87,26 @@ export default function Card({ game }: CardProps) {
         <S.CardTitle>{game.title}</S.CardTitle>
         <S.CardDisplayInfoContainer>
           <S.SmallerInfo>
-            <span style={{ padding: " 0 8px" }}>{game.publisher}</span>
-            <span
-              style={{
-                borderRight: "1px solid white",
-                borderLeft: "1px solid white",
-                padding: " 0 8px",
-              }}
-            >
-              {game.platform}
-            </span>
-            <span style={{ padding: " 0 8px" }}>
-              {dayjs(game.release_date).format("YYYY")}
-            </span>
+            {cardSmallerInfo.map((info) => (
+              <S.SmallerInfoText key={info}>{info}</S.SmallerInfoText>
+            ))}
           </S.SmallerInfo>
-          Gênero: ${game.genre}
+          <S.GenreInfo>
+            <S.GenreText>{game.genre}</S.GenreText>
+          </S.GenreInfo>
         </S.CardDisplayInfoContainer>
         {isHover && (
           <S.CardHiddenInfoContainer>
             {cardHiddenInfo.map((info) => (
-              <S.CardGameInfo key={info}>{info}</S.CardGameInfo>
+              <S.CardGameLink href={info.url} target="_blank" key={info.key}>
+                {info.icon}
+              </S.CardGameLink>
             ))}
           </S.CardHiddenInfoContainer>
         )}
         <S.CardGameLinkList>
-          {/* <S.CardGameLink href={game.freetogame_profile_url} target="_blank">
-          <S.CardGameMoreInfoIcon size="20" />
-        </S.CardGameLink> */}
           {favIcon}
           <StarRating id={game.id} {...{ setShowModal }} />
-          {/* <S.CardGameLink href={game.game_url} target="_blank">
-          <S.CardGameStoreIcon size="20" />
-        </S.CardGameLink> */}
         </S.CardGameLinkList>
       </S.CardContainer>
     </>

@@ -11,15 +11,15 @@ export default function AskToLoginModal({
 }: AskToLoginModalProps) {
   return (
     <S.Background showModal={showModal}>
-      <S.ModalContainer>
+      <S.ModalContainer showModal={showModal}>
         <S.ModalHeader>
           Opa, parece que você não está logado no momento!
         </S.ModalHeader>
         <S.ModalContent>
-          Para avaliar e favoritar os jogos, crie uma conta, é grátis!
+          <p>Você precisa estar logado para acessar algumas funções</p>
           <S.ModalActionsDiv>
             <S.ModalLink to="/auth">
-              <S.ModalButton>Criar conta</S.ModalButton>
+              <S.ModalButton>Entrar</S.ModalButton>
             </S.ModalLink>
             <S.ModalButton onClick={() => setShowModal(false)}>
               Talvez depois...

@@ -5,24 +5,26 @@ import { Link } from "react-router-dom";
 export const Background = styled.div<{ showModal: boolean }>`
   display: block;
   position: fixed;
-  left: ${(props) => (props.showModal ? 0 : "1000%")};
-  top: ${(props) => (props.showModal ? 0 : "1000%")};
-  right: ${(props) => (props.showModal ? 0 : "1000%")};
+  left: ${(props) => (props.showModal ? 0 : "100%")};
   bottom: 0;
+  right: 0;
+  top: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: 350ms;
+  transition: 300ms;
   z-index: 200;
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{ showModal: boolean }>`
   position: relative;
   flex-direction: column;
   display: flex;
-  left: 35%;
-  top: 20%;
+  left: ${(props) => (props.showModal ? "35%" : 0)};
+  top: 30%;
   width: 500px;
   height: 300px;
   background-color: ${pallete.darkGray};
+  transition: 500ms ease-in-out;
+  border-radius: 10px;
 `;
 
 export const ModalHeader = styled.div`
