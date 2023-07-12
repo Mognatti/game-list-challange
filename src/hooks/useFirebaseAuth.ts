@@ -89,6 +89,9 @@ export function useFirebaseAuth() {
   }
 
   async function postRating(ratingScore: number | null, gameId: number) {
+    if (ratingScore === null || !userId) {
+      return;
+    }
     if (userId) {
       const userDocumentRef = doc(db, "user", userId);
       const userSnapshot = await getDoc(userDocumentRef);
@@ -97,16 +100,12 @@ export function useFirebaseAuth() {
         const userDocData = userSnapshot.data();
         const ratedGames = userDocData.ratedGames || [];
 
-        let updated = false;
-        for (let i = 0; i < ratedGames.length; i++) {
-          if (ratedGames[i].id === gameId) {
-            ratedGames[i].score = ratingScore;
-            updated = true;
-            break;
-          }
-        }
+        const gameIndex = ratedGames.findIndex(
+          (game: any) => game.id === gameId
+        );
 
-        if (updated) {
+        if (gameIndex !== -1) {
+          ratedGames[gameIndex].score = ratingScore;
           await updateDoc(userDocumentRef, { ratedGames });
         } else {
           await updateDoc(userDocumentRef, {
