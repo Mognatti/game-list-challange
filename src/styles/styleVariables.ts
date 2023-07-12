@@ -26,6 +26,6 @@ export const typografy = {
   fontSize: {
     title: "24px",
     regular: "16px",
-    small: "12px",
+    small: "13px",
   },
 };

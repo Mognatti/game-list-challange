@@ -11,6 +11,7 @@ export const Background = styled.div<{ showModal: boolean }>`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   transition: 350ms;
+  z-index: 200;
 `;
 
 export const ModalContainer = styled.div`

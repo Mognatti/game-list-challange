@@ -23,12 +23,10 @@ export default function Card({ game }: CardProps) {
     },
   ] = useFirebaseAuth();
 
-  const cardInfo = [
+  const cardHiddenInfo = [
     `Data de lançamento: ${dayjs(game.release_date).format("DD/MM/YYYY")}`,
-    `Gênero: ${game.genre}`,
     `Produtora: ${game.developer}`,
     `Plataformas: ${game.platform}`,
-    `Publisher: ${game.publisher}`,
   ];
 
   useEffect(() => {
@@ -68,32 +66,53 @@ export default function Card({ game }: CardProps) {
   );
 
   return (
-    <S.CardContainer
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
-      <S.CardThumb src={game.thumbnail} alt={`Imagem do jogo ${game.title}`} />
-      <S.CardTitle>{game.title}</S.CardTitle>
-      {isHover ? (
-        <S.CardGameInfoContainer>
-          {cardInfo.map((info) => (
-            <S.CardGameInfo key={info}>{info}</S.CardGameInfo>
-          ))}
-        </S.CardGameInfoContainer>
-      ) : (
-        cardInfo.filter((info) => info.includes("Gênero"))
-      )}
-      <S.CardGameLinkList>
-        {/* <S.CardGameLink href={game.freetogame_profile_url} target="_blank">
+    <>
+      <AskToLoginModal {...{ showModal, setShowModal }} />
+      <S.CardContainer
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
+        <S.CardThumb
+          src={game.thumbnail}
+          alt={`Imagem do jogo ${game.title}`}
+        />
+        <S.CardTitle>{game.title}</S.CardTitle>
+        <S.CardDisplayInfoContainer>
+          <S.SmallerInfo>
+            <span style={{ padding: " 0 8px" }}>{game.publisher}</span>
+            <span
+              style={{
+                borderRight: "1px solid white",
+                borderLeft: "1px solid white",
+                padding: " 0 8px",
+              }}
+            >
+              {game.platform}
+            </span>
+            <span style={{ padding: " 0 8px" }}>
+              {dayjs(game.release_date).format("YYYY")}
+            </span>
+          </S.SmallerInfo>
+          Gênero: ${game.genre}
+        </S.CardDisplayInfoContainer>
+        {isHover && (
+          <S.CardHiddenInfoContainer>
+            {cardHiddenInfo.map((info) => (
+              <S.CardGameInfo key={info}>{info}</S.CardGameInfo>
+            ))}
+          </S.CardHiddenInfoContainer>
+        )}
+        <S.CardGameLinkList>
+          {/* <S.CardGameLink href={game.freetogame_profile_url} target="_blank">
           <S.CardGameMoreInfoIcon size="20" />
         </S.CardGameLink> */}
-        {favIcon}
-        <StarRating id={game.id} {...{ setShowModal }} />
-        {/* <S.CardGameLink href={game.game_url} target="_blank">
+          {favIcon}
+          <StarRating id={game.id} {...{ setShowModal }} />
+          {/* <S.CardGameLink href={game.game_url} target="_blank">
           <S.CardGameStoreIcon size="20" />
         </S.CardGameLink> */}
-      </S.CardGameLinkList>
-      <AskToLoginModal {...{ showModal, setShowModal }} />
-    </S.CardContainer>
+        </S.CardGameLinkList>
+      </S.CardContainer>
+    </>
   );
 }

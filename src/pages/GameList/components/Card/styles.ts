@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 import { BsInfoLg } from "react-icons/bs";
-import { pallete, breakPoints } from "../../../../styles/styleVariables";
+import {
+  pallete,
+  breakPoints,
+  typografy,
+} from "../../../../styles/styleVariables";
 
 export const CardContainer = styled.div`
   display: flex;
@@ -40,7 +44,23 @@ export const CardTitle = styled.h3`
   color: ${pallete.fontColorWhite};
   border-bottom: 1px solid ${pallete.yellow};
 `;
-export const CardGameInfoContainer = styled.div`
+
+export const CardDisplayInfoContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SmallerInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: -11px;
+  margin-bottom: 11px;
+  font-size: ${typografy.fontSize.small};
+`;
+export const CardHiddenInfoContainer = styled.div`
   opacity: 0;
   height: 0;
   transition: 350ms ease-in-out;
