@@ -18,7 +18,17 @@ export const SearchContainer = styled.div`
     outline: none;
   }
 `;
-export const TextBox = styled.div`
+
+export const NameAndRatingFilter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 16px;
+`;
+
+export const TextBox = styled.div<{ isFocused: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,10 +36,13 @@ export const TextBox = styled.div`
   padding-bottom: 8px;
   width: 400px;
   border-bottom: 1px solid ${pallete.yellow};
+  transition: transform 0.3s;
+  transform: ${(props) => (props.isFocused ? "scale(1.03)" : "none")};
   @media (max-width: ${breakPoints.smallest}) {
     width: 60%;
   }
 `;
+
 export const SearchInput = styled.input`
   width: 100%;
   border: none;
@@ -37,8 +50,10 @@ export const SearchInput = styled.input`
   caret-color: ${pallete.yellow};
   color: ${pallete.fontColorWhite};
   font-size: 16px;
-  :focus {
+  transition: 350ms;
+  &:focus {
     outline: none;
   }
 `;
+
 export const SearchIcon = styled(BsSearch)``;

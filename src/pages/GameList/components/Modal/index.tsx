@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import * as S from "./styles";
 
 interface AskToLoginModalProps {
@@ -9,8 +10,31 @@ export default function AskToLoginModal({
   showModal,
   setShowModal,
 }: AskToLoginModalProps) {
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  function closeModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (e.target === bgRef.current) {
+      setShowModal(false);
+    }
+  }
+
+  function escPress(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      setShowModal(false);
+    }
+  }
+  useEffect(() => {
+    const handleEscPress = (e: KeyboardEvent) => escPress(e);
+    document.addEventListener("keyup", (e) => handleEscPress);
+    return () => document.removeEventListener("keyup", handleEscPress);
+  }, []);
+
   return (
-    <S.Background showModal={showModal}>
+    <S.Background
+      showModal={showModal}
+      ref={bgRef}
+      onClick={(e) => closeModal(e)}
+    >
       <S.ModalContainer showModal={showModal}>
         <S.ModalHeader>
           Opa, parece que você não está logado no momento!

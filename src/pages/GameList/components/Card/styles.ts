@@ -16,13 +16,12 @@ export const CardContainer = styled.div`
   justify-content: center;
   padding: 8px;
   text-align: center;
-  transition: 350ms;
+  transition: 350ms ease-in-out;
   width: 25%;
   height: 470px;
   border-radius: 20px;
   &:hover {
     box-shadow: 0 0 12px 5px ${pallete.darkGray};
-    transition: 350ms;
   }
   @media (max-width: ${breakPoints.bigger}) {
     width: 40%;
@@ -36,10 +35,6 @@ export const CardContainer = styled.div`
 `;
 export const CardThumb = styled.img`
   border-radius: 10px;
-  transition: 350ms ease-in-out;
-  ${CardContainer}:hover & {
-    margin-top: -2%;
-  }
   @media (max-width: ${breakPoints.mid}) {
     width: 80%;
   }
@@ -48,7 +43,6 @@ export const CardTitle = styled.h3`
   color: ${pallete.fontColorWhite};
   border-bottom: 1px solid ${pallete.yellow};
 `;
-
 export const CardDisplayInfoContainer = styled.div`
   width: 100%;
   display: flex;
@@ -56,7 +50,6 @@ export const CardDisplayInfoContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 export const SmallerInfo = styled.div`
   width: 70%;
   display: flex;
@@ -67,7 +60,6 @@ export const SmallerInfo = styled.div`
   font-size: ${typografy.fontSize.small};
   color: ${pallete.fontColorWhite}${palleteOpacity.half};
 `;
-
 export const SmallerInfoText = styled.span`
   padding: 0px 8px;
 `;
@@ -79,12 +71,12 @@ export const GenreText = styled.p`
   padding: 6px 8px;
   color: ${pallete.fontColorWhite};
 `;
-
 export const CardHiddenInfoContainer = styled.div`
   opacity: 0;
   max-height: 0;
-  transition: 350ms ease-in-out;
+  transition: max-height 350ms ease-in-out;
   ${CardContainer}:hover & {
+    transition: 350ms ease-in-out;
     opacity: 1;
     display: flex;
     justify-content: center;
@@ -142,20 +134,30 @@ export const CardGameStoreIcon = styled(FiShoppingCart)`
     color: ${pallete.fontColorBlack};
   }
 `;
-export const OutlineHeartIcon = styled(AiOutlineHeart)`
-  border-radius: 50%;
+export const OutlineHeartIcon = styled(AiFillHeart)`
   padding: 8px;
-  color: ${pallete.yellow};
-  cursor: pointer;
-  &:hover {
-    color: red;
-  }
-`;
-
-export const FilledHeartIcon = styled(AiFillHeart)`
-  border-radius: 50%;
-  padding: 8px;
-  cursor: pointer;
   color: red;
   cursor: pointer;
+  & path {
+    fill: transparent;
+    stroke-width: 80px;
+    stroke: red;
+    transition: 350ms;
+    &:hover {
+      fill: red;
+    }
+  }
+`;
+export const FilledHeartIcon = styled(AiFillHeart)`
+  padding: 8px;
+  color: red;
+  cursor: pointer;
+  & path {
+    transition: 350ms;
+    &:hover {
+      stroke-width: 80px;
+      stroke: red;
+      fill: transparent;
+    }
+  }
 `;

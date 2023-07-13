@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { pallete } from "../../../../../../styles/styleVariables";
+import { pallete } from "../../../../styles/styleVariables";
 import { Link } from "react-router-dom";
 
 export const Background = styled.div<{ showModal: boolean }>`

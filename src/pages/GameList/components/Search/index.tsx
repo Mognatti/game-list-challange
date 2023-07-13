@@ -1,4 +1,5 @@
 import * as S from "../../styles";
+import { useState } from "react";
 
 interface Props {
   search: string;
@@ -6,18 +7,25 @@ interface Props {
 }
 
 export default function Search({ search, setSearch }: Props) {
+  const [isSearchInputFocused, setIsSearchInputFocused] = useState(false);
+  const handleSearchInputFocus = () => {
+    setIsSearchInputFocused(true);
+  };
+
+  const handleSearchInputBlur = () => {
+    setIsSearchInputFocused(false);
+  };
   return (
-    <>
-      <p>Filtros</p>
-      <S.TextBox>
-        <S.SearchInput
-          type="text"
-          placeholder="Busca por nome..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <S.SearchIcon />
-      </S.TextBox>
-    </>
+    <S.TextBox isFocused={isSearchInputFocused}>
+      <S.SearchInput
+        type="text"
+        placeholder="Busca por nome..."
+        onFocus={handleSearchInputFocus}
+        onBlur={handleSearchInputBlur}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <S.SearchIcon />
+    </S.TextBox>
   );
 }

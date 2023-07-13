@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import * as S from "./styles";
 import { GameFilterProps } from "../../../../types";
+import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
+import AskToLoginModal from "../Modal";
 
 const breakPoint = 1127;
 export default function GenreFilter({
@@ -14,6 +16,8 @@ export default function GenreFilter({
   const [showSelect, setShowSelect] = useState<boolean>(false);
   const [windowSize] = useState<number>(breakPoint);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [{ user }] = useFirebaseAuth();
 
   useEffect(() => {
     if (window.innerWidth > windowSize) {
@@ -41,6 +45,9 @@ export default function GenreFilter({
   };
 
   const filterFavorite = () => {
+    if (!user) {
+      return setShowModal(true);
+    }
     if (isFilterFav) {
       setIsFilterFav(false);
       return isFilterFav;
@@ -83,23 +90,26 @@ export default function GenreFilter({
     );
   } else {
     return (
-      <S.GenreList>
-        {genreList.map((genre: string, index) => (
+      <>
+        <AskToLoginModal {...{ showModal, setShowModal }} />
+        <S.GenreList>
+          {genreList.map((genre: string, index) => (
+            <S.GenreListButton
+              key={genre}
+              clicked={clickedButton === index}
+              onClick={() => selectFilter(genre, index)}
+            >
+              {genre}
+            </S.GenreListButton>
+          ))}
           <S.GenreListButton
-            key={genre}
-            clicked={clickedButton === index}
-            onClick={() => selectFilter(genre, index)}
+            clicked={isFilterFav}
+            onClick={() => filterFavorite()}
           >
-            {genre}
+            Favortios <S.FavFilter size="20" />
           </S.GenreListButton>
-        ))}
-        <S.GenreListButton
-          clicked={isFilterFav}
-          onClick={() => filterFavorite()}
-        >
-          Favortios <S.FavFilter size="20" />
-        </S.GenreListButton>
-      </S.GenreList>
+        </S.GenreList>
+      </>
     );
   }
 }

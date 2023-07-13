@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
-import AskToLoginModal from "./components/Modal";
+import AskToLoginModal from "../Modal";
 import StarRating from "./components/StarRating";
 
 export interface CardProps {
@@ -10,9 +10,8 @@ export interface CardProps {
 }
 
 export default function Card({ game }: CardProps) {
-  const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
-  const [isHover, setIsHover] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
   const [
     {
       addToFirebaseFavorites,
@@ -76,10 +75,7 @@ export default function Card({ game }: CardProps) {
   return (
     <>
       <AskToLoginModal {...{ showModal, setShowModal }} />
-      <S.CardContainer
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <S.CardContainer>
         <S.CardThumb
           src={game.thumbnail}
           alt={`Imagem do jogo ${game.title}`}
@@ -95,15 +91,15 @@ export default function Card({ game }: CardProps) {
             <S.GenreText>{game.genre}</S.GenreText>
           </S.GenreInfo>
         </S.CardDisplayInfoContainer>
-        {isHover && (
-          <S.CardHiddenInfoContainer>
-            {cardHiddenInfo.map((info) => (
-              <S.CardGameLink href={info.url} target="_blank" key={info.key}>
-                {info.icon}
-              </S.CardGameLink>
-            ))}
-          </S.CardHiddenInfoContainer>
-        )}
+
+        <S.CardHiddenInfoContainer>
+          {cardHiddenInfo.map((info) => (
+            <S.CardGameLink href={info.url} target="_blank" key={info.key}>
+              {info.icon}
+            </S.CardGameLink>
+          ))}
+        </S.CardHiddenInfoContainer>
+
         <S.CardGameLinkList>
           {favIcon}
           <StarRating id={game.id} {...{ setShowModal }} />

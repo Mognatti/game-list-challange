@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
+import { BsStarFill } from "react-icons/bs";
 import { pallete } from "../../../../../../styles/styleVariables";
 
 export const FilledStarIcon = styled(BsStarFill)`
@@ -8,13 +8,16 @@ export const FilledStarIcon = styled(BsStarFill)`
   cursor: pointer;
 `;
 
-export const HalfStarIcon = styled(BsStarHalf)`
-  color: ${pallete.yellow};
-  padding: 2px;
-`;
-
-export const OutlinedStarIcon = styled(BsStar)`
-  color: ${pallete.yellow};
+export const OutlinedStarIcon = styled(BsStarFill)`
+  & path {
+    fill: none;
+    stroke: ${pallete.yellow};
+    stroke-width: 1px;
+    transition: 350ms;
+    &:hover {
+      fill: ${pallete.yellow};
+    }
+  }
   padding: 2px;
   cursor: pointer;
 `;

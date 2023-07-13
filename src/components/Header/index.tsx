@@ -3,7 +3,7 @@ import * as S from "./styles";
 import ScrollTop from "./components/ScrollTop";
 import LoginHeader from "./components/LoginHeader";
 
-const headerTitle = "Projeto de Estágio Frontend React";
+const headerTitle = "My Game List";
 const showButtonHeight = 500;
 
 export default function Header() {

@@ -27,10 +27,10 @@ export default function GameList() {
         <Banner />
         <S.GameListContainer>
           <S.SearchContainer>
-            <div style={{ display: "flex" }}>
+            <S.NameAndRatingFilter>
               <Search {...{ search, setSearch }} />
               <RatingFilter {...{ sortByRating, setSortByRating }} />
-            </div>
+            </S.NameAndRatingFilter>
             <GenreFilter
               {...{
                 filter,
@@ -41,7 +41,15 @@ export default function GameList() {
               }}
             />
           </S.SearchContainer>
-          <Games {...{ search, filter, isFilterFav, sortByRating, gameList }} />
+          <Games
+            {...{
+              search,
+              filter,
+              isFilterFav,
+              sortByRating,
+              gameList,
+            }}
+          />
         </S.GameListContainer>
       </>
     );

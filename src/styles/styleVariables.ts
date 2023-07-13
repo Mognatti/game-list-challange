@@ -5,6 +5,7 @@ export const pallete = {
   fontColorBlack: "#121212",
   fontColorWhite: "#d8d8d8",
   yellow: "#e8dc56",
+  darkYellow: "#8c8313",
 };
 
 export const palleteOpacity = {

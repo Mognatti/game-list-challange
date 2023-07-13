@@ -48,26 +48,21 @@ export default function Games({
 
   useEffect(() => {
     const sortFilteredList = () => {
-      if (sortByRating && filteredList) {
+      if (filteredList) {
         const sortedList = [...filteredList].sort((a, b) => {
-          const scoreA = firebaseRatedGames?.find(
-            (item) => item.id === a.id
-          )?.score;
-          const scoreB = firebaseRatedGames?.find(
-            (item) => item.id === b.id
-          )?.score;
+          const scoreA =
+            firebaseRatedGames?.find((item) => item.id === a.id)?.score || 0;
+          const scoreB =
+            firebaseRatedGames?.find((item) => item.id === b.id)?.score || 0;
 
-          if (scoreA === null && scoreB === null) {
-            return 0;
+          if (scoreA === 0 || scoreB === 0) {
+            return scoreB - scoreA;
           }
-          if (scoreA === null) {
-            return 1;
+          if (scoreA === undefined || scoreB === undefined) return 1;
+          if (sortByRating) {
+            return scoreB - scoreA;
           }
-          if (scoreB === null) {
-            return -1;
-          }
-
-          return scoreB - scoreA;
+          return scoreA - scoreB;
         });
 
         setFilteredList(sortedList);
@@ -75,7 +70,7 @@ export default function Games({
     };
 
     sortFilteredList();
-  }, [sortByRating, filteredList, firebaseRatedGames]);
+  }, [sortByRating, firebaseRatedGames]);
 
   return (
     <S.GameList>
