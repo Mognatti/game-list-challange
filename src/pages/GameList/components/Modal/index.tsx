@@ -10,10 +10,10 @@ export default function AskToLoginModal({
   showModal,
   setShowModal,
 }: AskToLoginModalProps) {
-  const bgRef = useRef<HTMLDivElement>(null);
+  const BackgroundRef = useRef<HTMLDivElement>(null);
 
   function closeModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (e.target === bgRef.current) {
+    if (e.target === BackgroundRef.current) {
       setShowModal(false);
     }
   }
@@ -25,14 +25,14 @@ export default function AskToLoginModal({
   }
   useEffect(() => {
     const handleEscPress = (e: KeyboardEvent) => escPress(e);
-    document.addEventListener("keyup", (e) => handleEscPress);
-    return () => document.removeEventListener("keyup", handleEscPress);
+    document.addEventListener("keydown", handleEscPress);
+    return () => document.removeEventListener("keydown", handleEscPress);
   }, []);
 
   return (
     <S.Background
       showModal={showModal}
-      ref={bgRef}
+      ref={BackgroundRef}
       onClick={(e) => closeModal(e)}
     >
       <S.ModalContainer showModal={showModal}>
