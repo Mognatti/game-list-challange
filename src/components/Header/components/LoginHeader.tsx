@@ -10,7 +10,6 @@ export default function LoginHeader() {
     logOut();
     window.location.reload();
   }
-
   return (
     <S.LoginContainer>
       <S.ProfileImg

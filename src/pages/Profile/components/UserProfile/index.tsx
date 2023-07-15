@@ -3,10 +3,16 @@ import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 import * as S from "../../styles";
 import MiniCard from "../MiniCard";
 import useFavoritesListSize from "../../../../hooks/useFavoritesListSize";
+import { useEffect } from "react";
 
 export default function UserProfile(user: User) {
-  const [{ firebaseFavorites }] = useFirebaseAuth();
-  const favoriteListSize = useFavoritesListSize(firebaseFavorites);
+  const [{ firebaseUserDocsData, fetchFirebaseUserDocsData }] =
+    useFirebaseAuth();
+  const favoriteListSize = useFavoritesListSize(firebaseUserDocsData);
+
+  useEffect(() => {
+    if (user) fetchFirebaseUserDocsData(user.uid);
+  }, []);
 
   return (
     <S.ProfileContainer>
@@ -27,7 +33,7 @@ export default function UserProfile(user: User) {
       <S.ListSectionTitle>Favoritos</S.ListSectionTitle>
       <br />
       <S.FavortiesList>
-        {firebaseFavorites.map((item) =>
+        {firebaseUserDocsData.map((item) =>
           item.favorites?.map((game) => (
             <MiniCard key={game.id} {...game}></MiniCard>
           ))

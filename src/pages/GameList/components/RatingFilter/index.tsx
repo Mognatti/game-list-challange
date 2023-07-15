@@ -7,14 +7,14 @@ import * as S from "./styles";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 
 export default function RatingFilter({
-  sortByRating: sortByRatign,
-  setSortByRating: setSortByRating,
+  sortByRating,
+  setSortByRating,
 }: RatingFilterProps) {
   const [isChangeIcon, setisChangeIcon] = useState(false);
   const [{ user }] = useFirebaseAuth();
 
   function changeIcon() {
-    setSortByRating(!sortByRatign);
+    setSortByRating(!sortByRating);
     setisChangeIcon(!isChangeIcon);
   }
   return (

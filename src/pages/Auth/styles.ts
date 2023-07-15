@@ -16,14 +16,13 @@ export const Container = styled.div`
   opacity: 1;
   &::before {
     content: "";
-    background-image: url("/images/login_bg.png");
-    background-size: auto;
+    background-image: url("/images/login_bg.jpg");
     position: absolute;
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
-    opacity: 0.1;
+    opacity: 1;
     z-index: -1;
   }
 `;
@@ -90,6 +89,15 @@ export const LinkConteiner = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+`;
+
+export const LinkToLogin = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  transition: 350ms;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 export const LinkToCreateAccount = styled.span`

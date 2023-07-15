@@ -5,19 +5,33 @@ import { useFirebaseAuth } from "../../../../../../hooks/useFirebaseAuth";
 interface Props {
   id: number;
   setShowModal: React.Dispatch<React.SetStateAction<string>>;
+  postRating: any;
+  firebaseRatedGames: any;
+  user: any;
+  ratingScore: number;
 }
 
-export default function StarRating({ id, setShowModal }: Props) {
+export default function StarRating({
+  id,
+  ratingScore,
+  setShowModal,
+  postRating,
+  user,
+  firebaseRatedGames,
+}: Props) {
   const [rating, setRating] = useState<number | null>(null);
-  const [{ user, postRating, firebaseRatedGames }] = useFirebaseAuth();
+  const [{ fetchRatedGames }] = useFirebaseAuth();
+
+  useEffect(() => {
+    fetchRatedGames();
+  }, [user, id]);
 
   useEffect(() => {
     postRating(rating, id);
   }, [rating]);
 
   useEffect(() => {
-    const ratedGame = firebaseRatedGames?.find((game) => game.id === id);
-
+    const ratedGame = firebaseRatedGames?.find((game: any) => game.id === id);
     if (ratedGame) {
       setRating(ratedGame.score);
     }

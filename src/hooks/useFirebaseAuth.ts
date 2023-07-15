@@ -4,8 +4,7 @@ import {
   User,
   browserLocalPersistence,
   createUserWithEmailAndPassword,
-  getAuth,
-  signInWithCustomToken,
+  onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
@@ -25,65 +24,62 @@ import {
 import { FirebaseFavorite, Game, SignInProps, ratedGames } from "../types";
 
 export function useFirebaseAuth() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(auth.currentUser || null);
   const [userId, setUserId] = useState<string | null | undefined>(null);
-  const [firebaseFavorites, setFirebaseFavorites] = useState<
+  const [firebaseUserDocsData, setFirebaseUserDocsData] = useState<
     FirebaseFavorite[]
   >([]);
   const [firebaseRatedGames, setFirebaseRatedGames] = useState<ratedGames[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   useEffect(() => {
     setIsLoading(true);
-    function checkCurrentUser() {
-      console.log("é esse: ", auth.currentUser?.uid);
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setUserId(user?.uid);
+      setIsLoading(false);
+    });
 
-      if (auth.currentUser !== null) {
-        setUser(auth.currentUser);
-        setUserId(auth.currentUser.uid);
-        setIsLoading(false);
+    if (userId) {
+      fetchFirebaseUserDocsData(userId), fetchRatedGames();
+    }
+  }, [auth]);
+
+  async function fetchRatedGames() {
+    if (userId) {
+      const userDocumentRef = doc(db, "user", userId);
+      const userSnapshot = await getDoc(userDocumentRef);
+      if (userSnapshot.exists()) {
+        const userDocData = userSnapshot.data();
+        const ratedGamesData = userDocData.ratedGames || [];
+        setFirebaseRatedGames(ratedGamesData);
       }
     }
-    async function fetchFavoriteGames(id: string) {
-      const userCollectionRef = collection(db, "user");
-      const userIdDbQuery = query(userCollectionRef, where("uuid", "==", id));
-      const querySnapshot = await getDocs(userIdDbQuery);
-      if (querySnapshot) {
-        const buffer: any[] = [];
-        querySnapshot.forEach((doc) => {
-          if (!buffer.includes(doc.data())) {
-            buffer.push(doc.data());
-          }
-        });
-        setFirebaseFavorites(buffer);
-      }
-    }
-    async function fetchRatedGames() {
-      if (userId) {
-        const userDocumentRef = doc(db, "user", userId);
-        const userSnapshot = await getDoc(userDocumentRef);
+  }
 
-        if (userSnapshot.exists()) {
-          const userDocData = userSnapshot.data();
-          const ratedGamesData = userDocData.ratedGames || [];
-          setFirebaseRatedGames(ratedGamesData);
+  async function fetchFirebaseUserDocsData(id: string) {
+    const userCollectionRef = collection(db, "user");
+    const userIdDbQuery = query(userCollectionRef, where("uuid", "==", id));
+    const querySnapshot = await getDocs(userIdDbQuery);
+    if (querySnapshot) {
+      const buffer: any[] = [];
+      querySnapshot.forEach((doc) => {
+        if (!buffer.includes(doc.data())) {
+          buffer.push(doc.data());
         }
-      }
+      });
+      setFirebaseUserDocsData(buffer);
     }
-    checkCurrentUser();
-    if (userId) fetchFavoriteGames(userId);
-    fetchRatedGames();
-  }, []);
+  }
 
   async function addToFirebaseFavorites(game: Game) {
     if (userId) {
       const userDocumentRef = doc(db, "user", userId);
-      //Embora não seja necessário passar dados além do id, optei por passar mais algumas coisas para poder
-      //formar os mini-cards no perfil, onde não haverá preocupações com a API bugada
-      //Os cards da página principal ainda chegam pela API (inclusive os favoritos mostrados lá)
       await updateDoc(userDocumentRef, {
         favorites: arrayUnion({
           id: game.id,
           title: game.title,
+          genre: game.genre,
           game_url: game.game_url,
           thumbnail: game.thumbnail,
         }),
@@ -98,6 +94,7 @@ export function useFirebaseAuth() {
         favorites: arrayRemove({
           id: game.id,
           title: game.title,
+          genre: game.genre,
           game_url: game.game_url,
           thumbnail: game.thumbnail,
         }),
@@ -151,7 +148,6 @@ export function useFirebaseAuth() {
   }
 
   async function logIn({ email, password }: SignInProps) {
-    console.log("login event");
     try {
       await setPersistence(auth, browserLocalPersistence);
       const res = await signInWithEmailAndPassword(auth, email, password);
@@ -181,9 +177,11 @@ export function useFirebaseAuth() {
       addToFirebaseFavorites,
       postRating,
       removeFromFirebaseFavorites,
+      fetchFirebaseUserDocsData,
+      fetchRatedGames,
       isLoading,
       user,
-      firebaseFavorites,
+      firebaseUserDocsData,
       firebaseRatedGames,
     },
   ];

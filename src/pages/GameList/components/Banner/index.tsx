@@ -1,9 +1,7 @@
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
-import FirebaseLoader from "./FirebaseLoader";
 import * as S from "./styles";
 export default function Banner() {
-  const [{ user, isLoading }] = useFirebaseAuth();
-  console.log(`banner: `, isLoading);
+  const [{ user }] = useFirebaseAuth();
 
   return (
     <S.WelcomeDiv>

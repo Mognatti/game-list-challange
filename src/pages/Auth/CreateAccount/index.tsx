@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { CreateAccountProps } from "../../../types";
 import * as S from "../styles";
 
@@ -23,11 +22,7 @@ export default function CreateAccount({
   return (
     <S.Container>
       <S.Form>
-        <S.Title>Cadastre-se</S.Title>
-        <p>
-          Ao realizar o cadastro, você poderá salvar os seus jogos favoritos e
-          ainda poderá avalia-los!
-        </p>
+        <S.Title>Cadastro</S.Title>
         {inputs.map((item) => (
           <div key={item.id}>
             <S.Label htmlFor={item.id}>{item.label}</S.Label>
@@ -48,20 +43,15 @@ export default function CreateAccount({
       {isLoading ? (
         <p>Carregando dados</p>
       ) : (
-        <div>
+        <S.LinkConteiner>
           <p>
             Já possui uma conta?{" "}
-            <span
-              onClick={() => setLoginForm(true)}
-              style={{ cursor: "pointer" }}
-            >
+            <S.LinkToLogin onClick={() => setLoginForm(true)}>
               Entrar
-            </span>
+            </S.LinkToLogin>
           </p>
-          <Link to="/">
-            <S.GoBackIcon size="20" /> Retornar
-          </Link>
-        </div>
+          <S.LinkToReturn to="/">Cancelar</S.LinkToReturn>
+        </S.LinkConteiner>
       )}
     </S.Container>
   );

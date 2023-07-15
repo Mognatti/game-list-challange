@@ -46,22 +46,21 @@ export interface LoginProps {
 
 export interface FirebaseFavorite {
   favorites: Game[];
+  ratedGames?: { id: number; score: number }[];
   uuid: string;
 }
 
 export interface GameProps {
-  search: string;
-  filter: string | null;
-  gameList: Game[];
-  isFilterFav: boolean;
-  sortByRating: boolean;
+  games: any[];
+  firebaseRatedGames: any[] | undefined;
+  firebaseUserDocsData: any;
 }
 
 export interface GameFilterProps {
   filter: string | null;
   setFilter: React.Dispatch<React.SetStateAction<string | null>>;
-  isFilterFav: boolean;
-  setIsFilterFav: React.Dispatch<React.SetStateAction<boolean>>;
+  isFilterByFavorites: boolean;
+  setIsFilterByFavorites: React.Dispatch<React.SetStateAction<boolean>>;
   genreList: string[];
 }
 

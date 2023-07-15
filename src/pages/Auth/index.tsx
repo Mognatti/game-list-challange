@@ -4,14 +4,13 @@ import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 
-export default function Signup() {
+export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loginForm, setLoginForm] = useState(true);
   const [{ createUser, logIn, isLoading, user }] = useFirebaseAuth();
-  console.log("auth", isLoading);
-
+  console.log(`auth `, user);
   const inputs = [
     {
       id: "email",
@@ -36,6 +35,7 @@ export default function Signup() {
     },
   ];
 
+  if (isLoading) return <h1>Carregando...</h1>;
   if (user) return <Navigate to="/profile" />;
   if (loginForm && !user) {
     return (

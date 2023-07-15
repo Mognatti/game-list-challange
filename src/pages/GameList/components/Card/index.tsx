@@ -1,26 +1,32 @@
 import * as S from "./styles";
 import { Game } from "../../../../types";
 import { useState, useEffect } from "react";
-import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 import AskToLoginModal from "../Modal";
 import StarRating from "./components/StarRating";
+import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 
 export interface CardProps {
   game: Game;
+  addToFirebaseFavorites: any;
+  removeFromFirebaseFavorites: any;
+  user: any;
+  firebaseUserDocsData: any;
+  postRating: any;
+  firebaseRatedGames: any;
 }
 
-export default function Card({ game }: CardProps) {
+export default function Card({
+  game,
+  addToFirebaseFavorites,
+  removeFromFirebaseFavorites,
+  user,
+  firebaseUserDocsData,
+  postRating,
+  firebaseRatedGames,
+}: CardProps) {
   const [showModal, setShowModal] = useState<string>("false");
   const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
-  const [
-    {
-      addToFirebaseFavorites,
-      removeFromFirebaseFavorites,
-      firebaseFavorites,
-      user,
-    },
-  ] = useFirebaseAuth();
-
+  const [{ fetchRatedGames }] = useFirebaseAuth();
   const cardSmallerInfo = [game.publisher, game.platform];
   const cardHiddenInfo = [
     {
@@ -33,9 +39,12 @@ export default function Card({ game }: CardProps) {
     },
   ];
 
+  const ratingScore =
+    firebaseRatedGames?.find((item: any) => item.id === game.id)?.score || 0;
+
   useEffect(() => {
     const isFavorite = (id: number): boolean => {
-      for (const item of firebaseFavorites) {
+      for (const item of firebaseUserDocsData) {
         if (item.favorites && Array.isArray(item.favorites)) {
           for (const favorite of item.favorites) {
             if (favorite.id === id) {
@@ -47,13 +56,14 @@ export default function Card({ game }: CardProps) {
       return false;
     };
     setMarkedAsFavorited(isFavorite(game.id));
-  }, [firebaseFavorites, game.id]);
+  }, [firebaseUserDocsData, game.id, firebaseRatedGames]);
 
   async function favoriteSetter(game: Game) {
     if (!user) {
       setShowModal("true");
     } else {
       await addToFirebaseFavorites(game);
+      fetchRatedGames();
       setMarkedAsFavorited(!markedAsFavorited);
     }
   }
@@ -99,7 +109,11 @@ export default function Card({ game }: CardProps) {
 
         <S.CardGameLinkList>
           {favIcon}
-          <StarRating id={game.id} {...{ setShowModal }} />
+          <StarRating
+            ratingScore={ratingScore}
+            id={game.id}
+            {...{ setShowModal, postRating, firebaseRatedGames, user }}
+          />
         </S.CardGameLinkList>
       </S.CardContainer>
     </>

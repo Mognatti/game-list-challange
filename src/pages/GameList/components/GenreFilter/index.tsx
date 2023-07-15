@@ -8,8 +8,8 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 export default function GenreFilter({
   filter,
   setFilter,
-  isFilterFav,
-  setIsFilterFav,
+  isFilterByFavorites,
+  setIsFilterByFavorites,
   genreList,
 }: GameFilterProps) {
   const [clickedButton, setClickedButton] = useState<number | null>(null);
@@ -34,22 +34,22 @@ export default function GenreFilter({
     if (!user) {
       return setShowModal("true");
     }
-    if (isFilterFav) {
-      setIsFilterFav(false);
-      return isFilterFav;
+    if (isFilterByFavorites) {
+      setIsFilterByFavorites(false);
+      return isFilterByFavorites;
     } else {
-      setIsFilterFav(true);
-      return isFilterFav;
+      setIsFilterByFavorites(true);
+      return isFilterByFavorites;
     }
   };
 
   function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.target.value === "favoritos") {
-      setIsFilterFav(!isFilterFav);
+      setIsFilterByFavorites(!isFilterByFavorites);
       setFilter(null);
     } else {
       selectFilter(e.target.value);
-      setIsFilterFav(false);
+      setIsFilterByFavorites(false);
     }
   }
 
@@ -89,7 +89,7 @@ export default function GenreFilter({
             </S.GenreListButton>
           ))}
           <S.GenreListButton
-            clicked={isFilterFav.toString()}
+            clicked={isFilterByFavorites.toString()}
             onClick={() => filterFavorite()}
           >
             Favortios <S.FavFilter size="20" />

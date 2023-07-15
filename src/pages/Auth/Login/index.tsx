@@ -53,7 +53,7 @@ export default function Login({
             Criar conta
           </S.LinkToCreateAccount>
         </p>
-        <S.LinkToReturn to="/">Voltar para a lista</S.LinkToReturn>
+        <S.LinkToReturn to="/">Cancelar</S.LinkToReturn>
       </S.LinkConteiner>
     </S.Container>
   );
