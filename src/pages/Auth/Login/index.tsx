@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { LoginProps } from "../../../types";
 import * as S from "../styles";
 
@@ -7,7 +6,6 @@ export default function Login({
   email,
   password,
   logIn,
-  isLoading,
   setLoginForm,
 }: LoginProps) {
   async function logInUser(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {

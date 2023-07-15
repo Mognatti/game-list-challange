@@ -13,7 +13,6 @@ interface Props {
 
 export default function StarRating({
   id,
-  ratingScore,
   setShowModal,
   postRating,
   user,

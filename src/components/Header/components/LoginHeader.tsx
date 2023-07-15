@@ -1,10 +1,9 @@
 import { useFirebaseAuth } from "../../../hooks/useFirebaseAuth";
 import { useState } from "react";
 import * as S from "./styles";
-import FirebaseLoader from "./FirebaseLoader";
 
 export default function LoginHeader() {
-  const [{ logOut, user, isLoading }] = useFirebaseAuth();
+  const [{ logOut, user }] = useFirebaseAuth();
   const [showModal, setShowModal] = useState("false");
   function logOutHeader() {
     logOut();

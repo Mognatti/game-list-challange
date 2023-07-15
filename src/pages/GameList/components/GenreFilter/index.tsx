@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import * as S from "./styles";
 import { GameFilterProps } from "../../../../types";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
