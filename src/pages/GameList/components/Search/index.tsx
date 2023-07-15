@@ -16,7 +16,7 @@ export default function Search({ search, setSearch }: Props) {
     setIsSearchInputFocused(false);
   };
   return (
-    <S.TextBox isFocused={isSearchInputFocused}>
+    <S.TextBox focused={isSearchInputFocused.toString()}>
       <S.SearchInput
         type="text"
         placeholder="Busca por nome..."

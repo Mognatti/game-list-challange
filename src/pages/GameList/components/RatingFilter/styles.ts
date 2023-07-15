@@ -99,7 +99,7 @@ export const ArrowUp = styled(BsArrowUp)<{ rotate: boolean }>`
   transform: ${(props) => (props.rotate ? "rotate(0)" : "rotate(180deg)")};
 `;
 
-export const SortHigher = styled(BsStarFill)<{ clicked: boolean }>`
+export const SortHigher = styled(BsStarFill)`
   & path {
     stroke: ${pallete.yellow};
     fill: ${pallete.yellow};

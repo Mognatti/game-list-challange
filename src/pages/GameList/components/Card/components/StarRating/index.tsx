@@ -4,7 +4,7 @@ import { useFirebaseAuth } from "../../../../../../hooks/useFirebaseAuth";
 
 interface Props {
   id: number;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowModal: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function StarRating({ id, setShowModal }: Props) {
@@ -30,7 +30,7 @@ export default function StarRating({ id, setShowModal }: Props) {
       } else {
         setRating(value);
       }
-    } else if (!user) setShowModal(true);
+    } else if (!user) setShowModal("true");
   }
   const renderStars = () => {
     const stars = [];

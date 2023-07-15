@@ -5,7 +5,6 @@ import UserProfile from "./components/UserProfile";
 export default function Profile() {
   const [{ user, isLoading }] = useFirebaseAuth();
 
-  if (isLoading) return <p> carregando dados...</p>;
   return (
     <>
       <Header />

@@ -1,21 +1,11 @@
-import { useEffect, useState } from "react";
 import * as S from "./styles";
 import ScrollTop from "./components/ScrollTop";
 import LoginHeader from "./components/LoginHeader";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const headerTitle = "My Game List";
-const showButtonHeight = 500;
-
 export default function Header() {
-  const [showButton, setShowButton] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", () =>
-      window.scrollY > showButtonHeight
-        ? setShowButton(true)
-        : setShowButton(false)
-    );
-  }, []);
+  const [{ showScrollToTopButton }] = useWindowSize();
 
   return (
     <S.HeaderContainer>
@@ -23,7 +13,7 @@ export default function Header() {
         <S.HeaderListItem>
           <S.HeaderTitle>{headerTitle}</S.HeaderTitle>
         </S.HeaderListItem>
-        {showButton && (
+        {showScrollToTopButton && (
           <S.HeaderListItem>
             <ScrollTop />
           </S.HeaderListItem>

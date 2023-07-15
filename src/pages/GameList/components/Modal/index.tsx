@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import * as S from "./styles";
 
 interface AskToLoginModalProps {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  showModal: string;
+  setShowModal: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function AskToLoginModal({
@@ -14,13 +14,13 @@ export default function AskToLoginModal({
 
   function closeModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target === BackgroundRef.current) {
-      setShowModal(false);
+      setShowModal("false");
     }
   }
 
   function escPress(e: KeyboardEvent) {
     if (e.key === "Escape") {
-      setShowModal(false);
+      setShowModal("false");
     }
   }
   useEffect(() => {
@@ -31,11 +31,11 @@ export default function AskToLoginModal({
 
   return (
     <S.Background
-      showModal={showModal}
+      showmodal={showModal.toString()}
       ref={BackgroundRef}
       onClick={(e) => closeModal(e)}
     >
-      <S.ModalContainer showModal={showModal}>
+      <S.ModalContainer showmodal={showModal.toString()}>
         <S.ModalHeader>
           Opa, parece que você não está logado no momento!
         </S.ModalHeader>
@@ -45,7 +45,7 @@ export default function AskToLoginModal({
             <S.ModalLink to="/auth">
               <S.ModalButton>Entrar</S.ModalButton>
             </S.ModalLink>
-            <S.ModalButton onClick={() => setShowModal(false)}>
+            <S.ModalButton onClick={() => setShowModal("false")}>
               Talvez depois...
             </S.ModalButton>
           </S.ModalActionsDiv>

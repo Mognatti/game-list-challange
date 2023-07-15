@@ -10,6 +10,7 @@ export default function Signup() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loginForm, setLoginForm] = useState(true);
   const [{ createUser, logIn, isLoading, user }] = useFirebaseAuth();
+  console.log("auth", isLoading);
 
   const inputs = [
     {

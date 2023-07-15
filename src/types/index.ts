@@ -18,7 +18,7 @@ export interface CreateAccountProps {
   password: string;
   passwordConfirmation: string;
   createUser: ({ email, password }: SignInProps) => Promise<void>;
-  isLoading: boolean;
+  isLoading: boolean | undefined;
   setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -40,7 +40,7 @@ export interface LoginProps {
   email: string;
   password: string;
   logIn: ({ email, password }: SignInProps) => Promise<void>;
-  isLoading: boolean;
+  isLoading: boolean | undefined;
   setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -63,4 +63,9 @@ export interface GameFilterProps {
   isFilterFav: boolean;
   setIsFilterFav: React.Dispatch<React.SetStateAction<boolean>>;
   genreList: string[];
+}
+
+export interface ratedGames {
+  id: number;
+  score: number;
 }

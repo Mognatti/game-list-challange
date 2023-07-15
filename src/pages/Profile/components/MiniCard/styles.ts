@@ -18,6 +18,7 @@ export const MiniCardContainer = styled.div`
 
 export const MiniCardImg = styled.img`
   padding: 16px;
+  transition: 350ms;
 `;
 
 export const MiniCardTitleDiv = styled.div<{ hover: boolean }>`
@@ -34,6 +35,7 @@ export const FavIcon = styled(AiFillHeart)`
   color: red;
   cursor: pointer;
   padding: 8px;
+  z-index: 10;
 `;
 
 export const NotFavIcon = styled(AiOutlineHeart)`

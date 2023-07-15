@@ -13,11 +13,11 @@ export const GenreList = styled.ul`
   width: 60%;
   gap: 8px;
 `;
-export const GenreListButton = styled.button<{ clicked?: boolean }>`
+export const GenreListButton = styled.button<{ clicked?: string }>`
   background-color: ${(props) =>
-    props.clicked ? `${pallete.yellow}` : `${pallete.darkGray}`};
+    props.clicked === "true" ? `${pallete.yellow}` : `${pallete.darkGray}`};
   color: ${(props) =>
-    props.clicked
+    props.clicked === "true"
       ? `${pallete.backgroundColorDark}`
       : `${pallete.fontColorWhite}`};
   border: none;

@@ -10,7 +10,7 @@ export interface CardProps {
 }
 
 export default function Card({ game }: CardProps) {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<string>("false");
   const [markedAsFavorited, setMarkedAsFavorited] = useState<boolean>();
   const [
     {
@@ -24,15 +24,12 @@ export default function Card({ game }: CardProps) {
   const cardSmallerInfo = [game.publisher, game.platform];
   const cardHiddenInfo = [
     {
-      icon: (
-        <S.CardGameMoreInfoIcon key={game.freetogame_profile_url} size="20" />
-      ),
+      icon: <S.CardGameMoreInfoIcon size="20" />,
       url: game.freetogame_profile_url,
     },
     {
-      icon: <S.CardGameStoreIcon key={game.game_url} size="20" />,
+      icon: <S.CardGameStoreIcon size="20" />,
       url: game.game_url,
-      key: 90987,
     },
   ];
 
@@ -54,7 +51,7 @@ export default function Card({ game }: CardProps) {
 
   async function favoriteSetter(game: Game) {
     if (!user) {
-      setShowModal(true);
+      setShowModal("true");
     } else {
       await addToFirebaseFavorites(game);
       setMarkedAsFavorited(!markedAsFavorited);
@@ -94,7 +91,7 @@ export default function Card({ game }: CardProps) {
 
         <S.CardHiddenInfoContainer>
           {cardHiddenInfo.map((info) => (
-            <S.CardGameLink href={info.url} target="_blank" key={info.key}>
+            <S.CardGameLink href={info.url} target="_blank" key={info.url}>
               {info.icon}
             </S.CardGameLink>
           ))}

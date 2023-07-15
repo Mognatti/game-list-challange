@@ -11,12 +11,10 @@ export default function RatingFilter({
   setSortByRating: setSortByRating,
 }: RatingFilterProps) {
   const [isChangeIcon, setisChangeIcon] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
   const [{ user }] = useFirebaseAuth();
 
   function changeIcon() {
     setSortByRating(!sortByRatign);
-    setIsClicked(!isClicked);
     setisChangeIcon(!isChangeIcon);
   }
   return (
@@ -25,20 +23,12 @@ export default function RatingFilter({
         {user ? (
           isChangeIcon ? (
             <div>
-              <S.SortHigher
-                size="25"
-                clicked={isClicked}
-                onClick={() => changeIcon()}
-              />
+              <S.SortHigher size="25" onClick={() => changeIcon()} />
               <div style={{ color: "white" }}>Maior Avaliação</div>
             </div>
           ) : (
             <div>
-              <S.SortLower
-                size="25"
-                clicked={isClicked}
-                onClick={() => changeIcon()}
-              />
+              <S.SortLower size="25" onClick={() => changeIcon()} />
               <div style={{ color: "white" }}>Menor Avaliação</div>
             </div>
           )

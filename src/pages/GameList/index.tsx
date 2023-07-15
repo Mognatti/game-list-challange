@@ -15,16 +15,17 @@ export default function GameList() {
   const [filter, setFilter] = useState<string | null>(null);
   const [isFilterFav, setIsFilterFav] = useState<boolean>(false);
   const [sortByRating, setSortByRating] = useState(false);
-  const [{ gameList, genreList, isLoading, isError, errorMessage }] =
-    useFetch();
+  const [
+    { gameList, genreList, isLoading: isAPILoading, isError, errorMessage },
+  ] = useFetch();
 
-  if (isError) return <ErrorPage errorMessage={errorMessage} />;
-  if (isLoading) return <Loader />;
-  if (gameList && genreList) {
-    return (
-      <>
-        <Header />
-        <Banner />
+  return (
+    <>
+      <Header />
+      <Banner />
+      {isAPILoading && <Loader />}
+      {isError && <ErrorPage errorMessage={errorMessage} />}
+      {!isError && gameList && genreList && (
         <S.GameListContainer>
           <S.SearchContainer>
             <S.NameAndRatingFilter>
@@ -51,7 +52,7 @@ export default function GameList() {
             }}
           />
         </S.GameListContainer>
-      </>
-    );
-  }
+      )}
+    </>
+  );
 }

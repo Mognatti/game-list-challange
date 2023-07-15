@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { pallete } from "../../../../styles/styleVariables";
 import { Link } from "react-router-dom";
 
-export const Background = styled.div<{ showModal: boolean }>`
+export const Background = styled.div<{ showmodal: string }>`
   display: block;
   position: fixed;
-  left: ${(props) => (props.showModal ? 0 : "100%")};
+  left: ${(props) => (props.showmodal === "true" ? 0 : "100%")};
   bottom: 0;
   right: 0;
   top: 0;
@@ -14,11 +14,11 @@ export const Background = styled.div<{ showModal: boolean }>`
   z-index: 200;
 `;
 
-export const ModalContainer = styled.div<{ showModal: boolean }>`
+export const ModalContainer = styled.div<{ showmodal: string }>`
   position: relative;
   flex-direction: column;
   display: flex;
-  left: ${(props) => (props.showModal ? "35%" : 0)};
+  left: ${(props) => (props.showmodal === "true" ? "35%" : 0)};
   top: 30%;
   width: 500px;
   height: 300px;

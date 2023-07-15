@@ -28,7 +28,7 @@ export const NameAndRatingFilter = styled.div`
   padding-bottom: 16px;
 `;
 
-export const TextBox = styled.div<{ isFocused: boolean }>`
+export const TextBox = styled.div<{ focused: string }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -37,7 +37,7 @@ export const TextBox = styled.div<{ isFocused: boolean }>`
   width: 400px;
   border-bottom: 1px solid ${pallete.yellow};
   transition: transform 0.3s;
-  transform: ${(props) => (props.isFocused ? "scale(1.03)" : "none")};
+  transform: ${(props) => (props.focused === "true" ? "scale(1.03)" : "none")};
   @media (max-width: ${breakPoints.smallest}) {
     width: 60%;
   }

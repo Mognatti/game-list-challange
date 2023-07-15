@@ -3,8 +3,8 @@ import * as S from "./styles";
 import { GameFilterProps } from "../../../../types";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 import AskToLoginModal from "../Modal";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
-const breakPoint = 1127;
 export default function GenreFilter({
   filter,
   setFilter,
@@ -13,24 +13,10 @@ export default function GenreFilter({
   genreList,
 }: GameFilterProps) {
   const [clickedButton, setClickedButton] = useState<number | null>(null);
-  const [showSelect, setShowSelect] = useState<boolean>(false);
-  const [windowSize] = useState<number>(breakPoint);
   const selectRef = useRef<HTMLSelectElement>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState("false");
   const [{ user }] = useFirebaseAuth();
-
-  useEffect(() => {
-    if (window.innerWidth > windowSize) {
-      setShowSelect(false);
-    } else {
-      setShowSelect(true);
-    }
-    window.addEventListener("resize", () =>
-      window.innerWidth <= windowSize
-        ? setShowSelect(true)
-        : setShowSelect(false)
-    );
-  }, [windowSize]);
+  const [{ showSelect }] = useWindowSize();
 
   const selectFilter = (genre: string, index?: number) => {
     if (filter === genre) {
@@ -46,7 +32,7 @@ export default function GenreFilter({
 
   const filterFavorite = () => {
     if (!user) {
-      return setShowModal(true);
+      return setShowModal("true");
     }
     if (isFilterFav) {
       setIsFilterFav(false);
@@ -96,14 +82,14 @@ export default function GenreFilter({
           {genreList.map((genre: string, index) => (
             <S.GenreListButton
               key={genre}
-              clicked={clickedButton === index}
+              clicked={clickedButton === index ? "true" : "false"}
               onClick={() => selectFilter(genre, index)}
             >
               {genre}
             </S.GenreListButton>
           ))}
           <S.GenreListButton
-            clicked={isFilterFav}
+            clicked={isFilterFav.toString()}
             onClick={() => filterFavorite()}
           >
             Favortios <S.FavFilter size="20" />

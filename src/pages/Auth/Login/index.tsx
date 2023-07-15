@@ -17,7 +17,7 @@ export default function Login({
     } catch (error: any) {
       console.log(typeof error);
       const message = error.message;
-      alert(message);
+      console.log(message);
     }
   }
   return (
@@ -46,24 +46,15 @@ export default function Login({
           </S.Button>
         </S.InputsDiv>
       </S.Form>
-      {isLoading ? (
-        <p>Entrando...</p>
-      ) : (
-        <div>
-          <p>
-            Ainda não possui uma conta?{" "}
-            <span
-              onClick={() => setLoginForm(false)}
-              style={{ cursor: "pointer", borderBottom: "1px solid white" }}
-            >
-              Criar conta
-            </span>
-          </p>
-          <Link to="/">
-            <S.GoBackIcon size="20" /> Retornar
-          </Link>
-        </div>
-      )}
+      <S.LinkConteiner>
+        <p>
+          Ainda não possui uma conta?{" "}
+          <S.LinkToCreateAccount onClick={() => setLoginForm(false)}>
+            Criar conta
+          </S.LinkToCreateAccount>
+        </p>
+        <S.LinkToReturn to="/">Voltar para a lista</S.LinkToReturn>
+      </S.LinkConteiner>
     </S.Container>
   );
 }

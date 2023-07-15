@@ -6,6 +6,7 @@ import { useFirebaseAuth } from "./hooks/useFirebaseAuth";
 
 export default function AppRoutes() {
   const [{ user }] = useFirebaseAuth();
+  console.log("routes: ", user);
   return (
     <Router>
       <Routes>

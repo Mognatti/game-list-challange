@@ -4,7 +4,7 @@ import {
   palleteOpacity,
   typografy,
 } from "../../styles/styleVariables";
-import { TiArrowBackOutline } from "react-icons/ti";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   display: flex;
@@ -84,6 +84,32 @@ export const Button = styled.button`
   }
 `;
 
-export const GoBackIcon = styled(TiArrowBackOutline)`
-  color: ${pallete.yellow};
+export const LinkConteiner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const LinkToCreateAccount = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  transition: 350ms;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+export const LinkToReturn = styled(Link)`
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: ${pallete.fontColorWhite};
+  width: fit-content;
+  transition: 350ms;
+  text-decoration: underline;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
