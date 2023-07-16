@@ -136,6 +136,17 @@ export function useFirebaseAuth() {
     }
   }
 
+  async function updateUserNickname(nick: string) {
+    try {
+      await updateProfile(auth.currentUser!, {
+        displayName: nick,
+      });
+      window.location.reload();
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
   async function createUser({ email, nickname, password }: CreateFirebaseUser) {
     setIsLoginLoading(true);
     try {
@@ -194,6 +205,7 @@ export function useFirebaseAuth() {
       removeFromFirebaseFavorites,
       fetchFirebaseUserDocsData,
       fetchRatedGames,
+      updateUserNickname,
       isLoading,
       isLoginLoading,
       user,

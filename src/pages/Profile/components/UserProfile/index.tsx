@@ -3,17 +3,23 @@ import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
 import * as S from "../../styles";
 import MiniCard from "../MiniCard";
 import useFavoritesListSize from "../../../../hooks/useFavoritesListSize";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function UserProfile(user: User) {
-  const [{ firebaseUserDocsData, fetchFirebaseUserDocsData }] =
-    useFirebaseAuth();
+  const [showEditNickInput, setShowEditNickInput] = useState(false);
+  const [newNick, setNewNick] = useState("");
+  const [
+    { firebaseUserDocsData, fetchFirebaseUserDocsData, updateUserNickname },
+  ] = useFirebaseAuth();
   const favoriteListSize = useFavoritesListSize(firebaseUserDocsData);
 
   useEffect(() => {
     if (user) fetchFirebaseUserDocsData(user.uid);
   }, []);
 
+  function updateUserNick(newNick: string) {
+    updateUserNickname(newNick);
+  }
   return (
     <S.ProfileContainer>
       <S.ProfileHeader>
@@ -23,7 +29,34 @@ export default function UserProfile(user: User) {
             alt="placeholder profile pic"
           />
           <S.ProfileData>
-            <span>{user.displayName}</span>
+            <S.NickDiv>
+              {showEditNickInput ? (
+                <S.ChangeNickInput
+                  id="new-nick"
+                  type="text"
+                  value={newNick}
+                  onChange={(e) => setNewNick(e.target.value)}
+                />
+              ) : (
+                <span>{user.displayName}</span>
+              )}
+              {!showEditNickInput ? (
+                <S.EditNickIcon
+                  onClick={() => setShowEditNickInput(!showEditNickInput)}
+                />
+              ) : (
+                <>
+                  <S.SendChangeNickData onClick={() => updateUserNick(newNick)}>
+                    enviar
+                  </S.SendChangeNickData>
+                  <S.SendChangeNickData
+                    onClick={() => setShowEditNickInput(false)}
+                  >
+                    cancelar
+                  </S.SendChangeNickData>
+                </>
+              )}
+            </S.NickDiv>
             <div>
               Jogos salvos: <span>{favoriteListSize}</span>
             </div>

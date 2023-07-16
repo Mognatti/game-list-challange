@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { pallete, typografy } from "../../styles/styleVariables";
+import { breakPoints, pallete, typografy } from "../../styles/styleVariables";
+import { BiSolidEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 export const ProfileContainer = styled.div`
@@ -16,6 +17,30 @@ export const ProfileHeader = styled.div`
   align-items: center;
 `;
 
+export const ChangeNickInput = styled.input`
+  background-color: transparent;
+  outline: 2px solid ${pallete.yellow};
+  border-radius: 8px;
+  padding: 8px;
+  border: none;
+  color: ${pallete.fontColorWhite};
+  caret-color: ${pallete.yellow};
+`;
+export const SendChangeNickData = styled.button`
+  background-color: transparent;
+  padding: 8px;
+  border-radius: 8px;
+  color: ${pallete.fontColorWhite};
+  border: none;
+  outline: 2px solid ${pallete.yellow};
+  cursor: pointer;
+  margin-left: 8px;
+  transition: 350ms;
+  &:hover {
+    color: ${pallete.fontColorBlack};
+    background-color: ${pallete.yellow};
+  }
+`;
 export const ProfileInfoContainer = styled.div`
   width: 100%;
   display: flex;
@@ -23,9 +48,25 @@ export const ProfileInfoContainer = styled.div`
   align-items: center;
 `;
 
+export const NickDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+`;
+
+export const EditNickIcon = styled(BiSolidEdit)`
+  cursor: pointer;
+`;
 export const ProfileImg = styled.img`
   width: 10%;
   padding: 8px;
+  @media (max-width: ${breakPoints.mid}) {
+    width: 20%;
+  }
+  @media (max-width: ${breakPoints.smaller}) {
+    width: 30%;
+  }
 `;
 
 export const ProfileData = styled.div`
