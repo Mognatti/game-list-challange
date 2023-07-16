@@ -107,6 +107,15 @@ export const CardHiddenInfoContainer = styled.div`
     gap: 20%;
     margin-top: 5%;
   }
+  @media (max-width: ${breakPoints.midSmall}) {
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    max-height: 10%;
+    width: 100%;
+    gap: 20%;
+    margin-top: 5%;
+  }
 `;
 export const CardGameInfo = styled.p`
   color: ${pallete.fontColorWhite};
