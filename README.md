@@ -29,11 +29,11 @@ A aplicação possui responsividade, possuindo uma apresentação diferente no d
 
 ### Prints do projeto (FASE 1)
 
-![Visão geral da home page](src/assets/prints/desktop-init.png)
+![Visão geral da home page](src/assets/prints/before-desktop-init.png)
 ![Visão geral da página de erro](src/assets/prints/before-error-page.png)
 
 ### Prints do projeto (FASE 2)
-![Visão geral da home page](src/assets/prints/before-desktop-init.png)
+![Visão geral da home page](src/assets/prints/desktop-init.png)
 ![Profile](src/assets/prints/profile.png)
 ![Visão geral da página de erro](src/assets/prints/error-page.png)
 
