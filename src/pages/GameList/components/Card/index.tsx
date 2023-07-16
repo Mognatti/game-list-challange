@@ -77,27 +77,10 @@ export default function Card({
     />
   );
 
-  function handleMouseEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    console.log("X", e.clientX);
-    console.log("Y", e.clientY);
-  }
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    console.log("X", e.nativeEvent.clientX);
-    console.log("Y", e.nativeEvent.clientY);
-  }
-
-  function handleMouseLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    console.log("X", e.clientX);
-    console.log("Y", e.clientY);
-  }
   return (
     <>
       <AskToLoginModal {...{ showModal, setShowModal }} />
-      <S.CardContainer
-        onMouseEnter={(e) => handleMouseEnter(e)}
-        onMouseMove={(e) => handleMouseMove(e)}
-        onMouseLeave={(e) => handleMouseLeave(e)}
-      >
+      <S.CardContainer>
         <S.CardThumb
           src={game.thumbnail}
           alt={`Imagem do jogo ${game.title}`}
