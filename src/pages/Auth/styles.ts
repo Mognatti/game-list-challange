@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  breakPoints,
   pallete,
   palleteOpacity,
   typografy,
@@ -36,6 +37,13 @@ export const Form = styled.form`
   padding: 32px 20px;
   background-color: ${pallete.backgroundColorDark};
   border-radius: 15px;
+  gap: 2vh;
+  @media (max-width: ${breakPoints.mid}) {
+    width: 45%;
+  }
+  @media (max-width: ${breakPoints.small}) {
+    width: 70%;
+  }
 `;
 
 export const Title = styled.h3`
@@ -57,11 +65,12 @@ export const Input = styled.input`
   margin: 8px 0 8px 0;
   color: ${pallete.fontColorWhite};
   background-color: transparent;
+  caret-color: ${pallete.yellow};
   outline: 1px solid ${pallete.yellow + palleteOpacity.third};
   width: 95%;
+  transition: 350ms;
   &:hover,
   &:focus {
-    transition: 250ms;
     box-shadow: 0px 0px 10px 0px ${pallete.yellow}${palleteOpacity.third};
   }
 `;
@@ -81,8 +90,8 @@ export const Button = styled.button`
   cursor: pointer;
   font-weight: 500;
   font-size: ${typografy.fontSize.regular};
+  transition: 350ms;
   &:hover {
-    transition: 250ms;
     box-shadow: 0px 0px 10px 0px ${pallete.yellow}${palleteOpacity.third};
   }
 `;

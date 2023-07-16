@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { pallete } from "../../../../styles/styleVariables";
+import { breakPoints, pallete } from "../../../../styles/styleVariables";
 import { Link } from "react-router-dom";
 
 export const Background = styled.div<{ showmodal: string }>`
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
-  left: ${(props) => (props.showmodal === "true" ? 0 : "100%")};
+  left: ${(props) => (props.showmodal === "true" ? "-15%" : "150%")};
   bottom: 0;
   right: 0;
   top: 0;
@@ -18,13 +20,18 @@ export const ModalContainer = styled.div<{ showmodal: string }>`
   position: relative;
   flex-direction: column;
   display: flex;
-  left: ${(props) => (props.showmodal === "true" ? "35%" : 0)};
-  top: 30%;
+  left: ${(props) => (props.showmodal === "true" ? "8%" : 0)};
   width: 500px;
   height: 300px;
   background-color: ${pallete.darkGray};
   transition: 500ms ease-in-out;
   border-radius: 10px;
+  @media (max-width: ${breakPoints.small}) {
+    width: 300px;
+    height: 350px;
+    justify-items: center;
+    align-items: center;
+  }
 `;
 
 export const ModalHeader = styled.div`
@@ -36,6 +43,7 @@ export const ModalHeader = styled.div`
   font-size: 1.2em;
   padding: 16px 0;
   border-bottom: 1px solid ${pallete.yellow};
+  text-align: center;
 `;
 
 export const ModalContent = styled.div`
