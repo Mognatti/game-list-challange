@@ -1,11 +1,14 @@
 import styled, { css, keyframes } from "styled-components";
-import { pallete } from "../../../styles/styleVariables";
+import { breakPoints, pallete } from "../../../styles/styleVariables";
 import { Link } from "react-router-dom";
 import { BsArrowUpCircle } from "react-icons/bs";
 
 const imageShakeAnimation = keyframes`
 0% {
   transform: scale(1.08);
+  box-shadow: 0 0 15px 5px ${pallete.yellow};
+  border-radius: 50%;
+
 }
 
 20%{
@@ -15,6 +18,8 @@ const imageShakeAnimation = keyframes`
 
 40%{
   transform: scale(1.08);
+  box-shadow: 0 0 15px 5px ${pallete.yellow};
+  border-radius: 50%;
 }
 
 
@@ -25,6 +30,8 @@ const imageShakeAnimation = keyframes`
 
 80%{
   transform: scale(1.08);
+  box-shadow: 0 0 15px 5px ${pallete.yellow};
+  border-radius: 50%;
 }
 
 100%{
@@ -50,6 +57,10 @@ const showLink = css`
 
 export const ArrowUpIcon = styled(BsArrowUpCircle)`
   cursor: pointer;
+  position: fixed;
+  right: 3%;
+  top: 90%;
+  color: ${pallete.yellow};
   &:hover {
     transition: 350ms;
     opacity: 0.5;
@@ -62,18 +73,61 @@ export const LoginContainer = styled.div`
   flex-wrap: nowrap;
 `;
 
-export const ProfileImg = styled.img<{ logged: string; modaldisplay: string }>`
+export const ProfileImg = styled.img<{
+  logged: string;
+  modaldisplay: string;
+  user: string;
+}>`
   position: relative;
-  width: ${(props) => (props.logged == "true" ? "25%" : "12%")};
-  right: ${(props) => (props.modaldisplay === "true" ? "90px" : "8px")};
+  width: 25%;
+  right: ${(props) => (props.modaldisplay === "true" ? "37%" : "10%")};
   top: ${(props) => (props.modaldisplay === "true" ? "10px" : "0")};
-  border-bottom: ${(props) =>
-    props.modaldisplay === "true" ? `1px solid ${pallete.yellow}` : "none"};
+  border-radius: 50%;
   cursor: pointer;
   z-index: 10;
-  padding: 8px;
   transition: 350ms;
   ${imageShake}
+  @media (max-width: ${breakPoints.bigger}) {
+    right: ${(props) => (props.modaldisplay === "true" ? "30%" : "10%")};
+  }
+  @media (max-width: ${breakPoints.big}) {
+    right: ${(props) => (props.modaldisplay === "true" ? "28%" : "10%")};
+    top: ${(props) => (props.modaldisplay === "true" ? "10px" : "1vh")};
+    margin-bottom: 2vh;
+  }
+  @media (max-width: ${breakPoints.mid}) {
+    right: ${(props) => (props.modaldisplay === "true" ? "36%" : "10%")};
+    width: 28%;
+  }
+  @media (max-width: ${breakPoints.small}) {
+    top: ${(props) => (props.modaldisplay === "true" ? "10px" : "1vh")};
+    right: ${(props) => (props.modaldisplay === "true" ? "38%" : "10%")};
+    width: 30%;
+  }
+  @media (max-width: ${breakPoints.smaller}) {
+    right: ${(props) => (props.modaldisplay === "true" ? "42%" : "10%")};
+  }
+  @media (max-width: ${breakPoints.smallest}) {
+    right: ${(props) => (props.modaldisplay === "true" ? "45%" : "10%")};
+  }
+  @media (max-width: 415px) {
+    right: ${(props) => (props.modaldisplay === "true" ? "45%" : "10%")};
+    width: 35%;
+  }
+  @media (max-width: 376px) {
+    right: ${(props) => (props.modaldisplay === "true" ? "48%" : "10%")};
+    top: ${(props) => (props.modaldisplay === "true" ? "2.5vh" : "1vh")};
+  }
+`;
+
+export const ProfileInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin-top: -2vh;
+  padding-bottom: 8px;
+  border-bottom: 1px solid ${pallete.yellow};
 `;
 
 export const LoginMenuContainer = styled.div<{ display: string }>`
@@ -90,6 +144,9 @@ export const LoginMenuContainer = styled.div<{ display: string }>`
   border-radius: 8px;
   top: 5px;
   right: 5px;
+  @media (max-width: ${breakPoints.mid}) {
+    width: 200px;
+  }
 `;
 
 export const LoginMenuDiv = styled.div`

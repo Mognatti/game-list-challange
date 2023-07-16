@@ -1,21 +1,24 @@
-import { CreateAccountProps } from "../../../types";
+import { pallete } from "../../../styles/styleVariables";
+import { AccountInfo } from "../../../types";
 import * as S from "../styles";
+import { MoonLoader } from "react-spinners";
 
 export default function CreateAccount({
   inputs,
   email,
+  nickname,
   password,
   passwordConfirmation,
   createUser,
-  isLoading,
+  isLoginLoading,
   setLoginForm,
-}: CreateAccountProps) {
+}: AccountInfo) {
   async function signIn(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     if (password !== passwordConfirmation) {
       alert("As senhas não são iguais!");
     } else {
-      await createUser({ email, password });
+      await createUser({ email, nickname, password });
     }
   }
 
@@ -37,22 +40,22 @@ export default function CreateAccount({
           </div>
         ))}
         <S.Button type="submit" onClick={(e) => signIn(e)}>
-          Cadastrar
+          {isLoginLoading ? (
+            <MoonLoader size="20px" color={pallete.yellow} />
+          ) : (
+            "Cadastrar"
+          )}
         </S.Button>
       </S.Form>
-      {isLoading ? (
-        <p>Carregando dados</p>
-      ) : (
-        <S.LinkConteiner>
-          <p>
-            Já possui uma conta?{" "}
-            <S.LinkToLogin onClick={() => setLoginForm(true)}>
-              Entrar
-            </S.LinkToLogin>
-          </p>
-          <S.LinkToReturn to="/">Cancelar</S.LinkToReturn>
-        </S.LinkConteiner>
-      )}
+      <S.LinkConteiner>
+        <p>
+          Já possui uma conta?{" "}
+          <S.LinkToLogin onClick={() => setLoginForm(true)}>
+            Entrar
+          </S.LinkToLogin>
+        </p>
+        <S.LinkToReturn to="/">Cancelar</S.LinkToReturn>
+      </S.LinkConteiner>
     </S.Container>
   );
 }

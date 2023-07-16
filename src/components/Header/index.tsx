@@ -1,11 +1,11 @@
 import * as S from "./styles";
-import ScrollTop from "./components/ScrollTop";
 import LoginHeader from "./components/LoginHeader";
-import useWindowSize from "../../hooks/useWindowSize";
-
+import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
 const headerTitle = "My Game List";
 export default function Header() {
-  const [{ showScrollToTopButton }] = useWindowSize();
+  const [{ isLoading }] = useFirebaseAuth();
+
+  if (isLoading) return;
 
   return (
     <S.HeaderContainer>
@@ -13,11 +13,6 @@ export default function Header() {
         <S.HeaderListItem>
           <S.HeaderTitle>{headerTitle}</S.HeaderTitle>
         </S.HeaderListItem>
-        {showScrollToTopButton && (
-          <S.HeaderListItem>
-            <ScrollTop />
-          </S.HeaderListItem>
-        )}
       </S.HeaderList>
       <LoginHeader />
     </S.HeaderContainer>

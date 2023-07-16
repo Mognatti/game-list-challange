@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 import { BsInfoLg } from "react-icons/bs";
@@ -8,6 +8,28 @@ import {
   typografy,
   palleteOpacity,
 } from "../../../../styles/styleVariables";
+
+const flipHeartIconAnimation = keyframes`
+0%{
+transform: rotateY(180deg);
+}
+30%{
+
+  transform: rotateY(-180deg);
+}
+60%{
+
+  transform: rotateY(180deg);
+}
+100%{
+
+  transform: none
+}
+`;
+
+const flipHeart = css`
+  animation: ${flipHeartIconAnimation} 1s linear;
+`;
 
 export const CardContainer = styled.div`
   display: flex;
@@ -134,7 +156,7 @@ export const CardGameStoreIcon = styled(FiShoppingCart)`
     color: ${pallete.fontColorBlack};
   }
 `;
-export const OutlineHeartIcon = styled(AiFillHeart)`
+export const OutlineHeartIcon = styled(AiFillHeart)<{ clicked: string }>`
   padding: 8px;
   color: red;
   cursor: pointer;
@@ -147,8 +169,14 @@ export const OutlineHeartIcon = styled(AiFillHeart)`
       fill: red;
     }
   }
+  ${(props) =>
+    props.clicked === "true"
+      ? css`
+          ${flipHeart}
+        `
+      : ``}
 `;
-export const FilledHeartIcon = styled(AiFillHeart)`
+export const FilledHeartIcon = styled(AiFillHeart)<{ clicked: string }>`
   padding: 8px;
   color: red;
   cursor: pointer;
@@ -160,4 +188,10 @@ export const FilledHeartIcon = styled(AiFillHeart)`
       fill: transparent;
     }
   }
+  ${(props) =>
+    props.clicked === "true"
+      ? css`
+          ${flipHeart}
+        `
+      : ``}
 `;

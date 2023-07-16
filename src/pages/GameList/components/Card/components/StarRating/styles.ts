@@ -9,15 +9,10 @@ export const FilledStarIcon = styled(BsStarFill)`
 `;
 
 export const OutlinedStarIcon = styled(BsStarFill)`
-  & path {
-    fill: none;
-    stroke: ${pallete.yellow};
-    stroke-width: 1px;
-    transition: 350ms;
-    &:hover {
-      fill: ${pallete.yellow};
-    }
-  }
+  fill: ${(props) => (props.hovered === "true" ? `${pallete.yellow}` : "none")};
+  stroke: ${pallete.yellow};
+  stroke-width: 1px;
+  transition: 350ms;
   padding: 2px;
   cursor: pointer;
 `;

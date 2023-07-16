@@ -23,14 +23,19 @@ export default function UserProfile(user: User) {
             alt="placeholder profile pic"
           />
           <S.ProfileData>
-            {user.email}
+            <span>{user.displayName}</span>
             <div>
-              jogos salvos: <span>{favoriteListSize}</span>
+              Jogos salvos: <span>{favoriteListSize}</span>
             </div>
+            <S.ProfileLinkToHome to="/">
+              <S.ProfileButtonToHome>Ver Lista Completa</S.ProfileButtonToHome>
+            </S.ProfileLinkToHome>
           </S.ProfileData>
         </S.ProfileInfoContainer>
       </S.ProfileHeader>
-      <S.ListSectionTitle>Favoritos</S.ListSectionTitle>
+      <S.TitleContainer>
+        <S.ListSectionTitle>Favoritos</S.ListSectionTitle>
+      </S.TitleContainer>
       <br />
       <S.FavortiesList>
         {firebaseUserDocsData.map((item) =>

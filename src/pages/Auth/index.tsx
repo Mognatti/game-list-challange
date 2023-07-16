@@ -6,11 +6,11 @@ import CreateAccount from "./CreateAccount";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loginForm, setLoginForm] = useState(true);
-  const [{ createUser, logIn, isLoading, user }] = useFirebaseAuth();
-  console.log(`auth `, user);
+  const [{ createUser, logIn, isLoginLoading, user }] = useFirebaseAuth();
   const inputs = [
     {
       id: "email",
@@ -18,6 +18,13 @@ export default function Auth() {
       type: "email",
       value: email,
       setter: setEmail,
+    },
+    {
+      id: "nick",
+      label: "Apelido",
+      type: "text",
+      value: nickname,
+      setter: setNickname,
     },
     {
       id: "password",
@@ -35,11 +42,19 @@ export default function Auth() {
     },
   ];
 
-  if (isLoading) return <h1>Carregando...</h1>;
   if (user) return <Navigate to="/profile" />;
   if (loginForm && !user) {
     return (
-      <Login {...{ inputs, email, password, logIn, isLoading, setLoginForm }} />
+      <Login
+        {...{
+          inputs,
+          email,
+          password,
+          logIn,
+          isLoginLoading,
+          setLoginForm,
+        }}
+      />
     );
   }
   if (!loginForm && !user)
@@ -48,10 +63,11 @@ export default function Auth() {
         {...{
           inputs,
           email,
+          nickname,
           password,
           passwordConfirmation,
           createUser,
-          isLoading,
+          isLoginLoading,
           setLoginForm,
         }}
       />

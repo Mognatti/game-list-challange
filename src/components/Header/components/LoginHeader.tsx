@@ -5,13 +5,16 @@ import * as S from "./styles";
 export default function LoginHeader() {
   const [{ logOut, user }] = useFirebaseAuth();
   const [showModal, setShowModal] = useState("false");
+
   function logOutHeader() {
     logOut();
     window.location.reload();
   }
+
   return (
     <S.LoginContainer>
       <S.ProfileImg
+        user={user ? "true" : "false"}
         logged={user ? "true" : "false"}
         modaldisplay={showModal}
         src={
@@ -20,11 +23,12 @@ export default function LoginHeader() {
         alt="perfil img"
         onClick={() => setShowModal(showModal === "true" ? "false" : "true")}
       />
-      <S.LoginMenuContainer
-        onBlur={() => setShowModal("false")}
-        display={showModal}
-      >
+      <S.LoginMenuContainer display={showModal}>
         <S.LoginMenuDiv>
+          <S.ProfileInfo>
+            <span>{user?.displayName}</span>
+            <span>{user?.email}</span>
+          </S.ProfileInfo>
           <S.LinkButton display={showModal} to={user ? "/profile" : "/auth"}>
             <S.LoginButton>{user ? "Perfil" : "Entrar"}</S.LoginButton>
           </S.LinkButton>

@@ -1,3 +1,43 @@
+import { User } from "firebase/auth";
+
+export interface AccountInfo {
+  inputs: loginInputType[];
+  email: string;
+  nickname: string;
+  password: string;
+  passwordConfirmation: string;
+  createUser: ({
+    email,
+    nickname,
+    password,
+  }: CreateFirebaseUser) => Promise<void>;
+  isLoginLoading: boolean | undefined;
+  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface LoginProps {
+  inputs: loginInputType[];
+  email: string;
+  password: string;
+  logIn: ({ email, password }: CreateFirebaseUser) => Promise<void>;
+  isLoginLoading: boolean | undefined;
+  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface CreateFirebaseUser {
+  email: string;
+  nickname?: string;
+  password: string;
+}
+
+export type loginInputType = {
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  setter: React.Dispatch<React.SetStateAction<string>>;
+};
+
 export type Game = {
   developer: string;
   freetogame_profile_url: string;
@@ -11,38 +51,6 @@ export type Game = {
   thumbnail: string;
   title: string;
 };
-
-export interface CreateAccountProps {
-  inputs: loginInputType[];
-  email: string;
-  password: string;
-  passwordConfirmation: string;
-  createUser: ({ email, password }: SignInProps) => Promise<void>;
-  isLoading: boolean | undefined;
-  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export interface SignInProps {
-  email: string;
-  password: string;
-}
-
-export type loginInputType = {
-  id: string;
-  label: string;
-  type: string;
-  value: string;
-  setter: React.Dispatch<React.SetStateAction<string>>;
-};
-
-export interface LoginProps {
-  inputs: loginInputType[];
-  email: string;
-  password: string;
-  logIn: ({ email, password }: SignInProps) => Promise<void>;
-  isLoading: boolean | undefined;
-  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 export interface FirebaseFavorite {
   favorites: Game[];
@@ -67,4 +75,23 @@ export interface GameFilterProps {
 export interface ratedGames {
   id: number;
   score: number;
+}
+
+export interface CardProps {
+  game: Game;
+  addToFirebaseFavorites: (game: Game) => Promise<void>;
+  removeFromFirebaseFavorites: (game: Game) => Promise<void>;
+  user: User | null;
+  firebaseUserDocsData: FirebaseFavorite[];
+  postRating: (ratingScore: number | null, gameId: number) => Promise<void>;
+  firebaseRatedGames: ratedGames[] | undefined;
+}
+
+export interface StarRatignProps {
+  id: number;
+  setShowModal: React.Dispatch<React.SetStateAction<string>>;
+  postRating: (ratingScore: number | null, gameId: number) => Promise<void>;
+  firebaseRatedGames: ratedGames[] | undefined;
+  user: User | null;
+  ratingScore: number;
 }

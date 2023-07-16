@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import * as S from "./styles";
 import { useFirebaseAuth } from "../../../../../../hooks/useFirebaseAuth";
-
-interface Props {
-  id: number;
-  setShowModal: React.Dispatch<React.SetStateAction<string>>;
-  postRating: any;
-  firebaseRatedGames: any;
-  user: any;
-  ratingScore: number;
-}
+import { StarRatignProps } from "../../../../../../types";
 
 export default function StarRating({
   id,
@@ -17,8 +9,9 @@ export default function StarRating({
   postRating,
   user,
   firebaseRatedGames,
-}: Props) {
+}: StarRatignProps) {
   const [rating, setRating] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState<number | null>(null);
   const [{ fetchRatedGames }] = useFirebaseAuth();
 
   useEffect(() => {
@@ -45,16 +38,34 @@ export default function StarRating({
       }
     } else if (!user) setShowModal("true");
   }
+
+  function handleStarHover(value: number) {
+    setIsHovered(value);
+  }
+
+  function handleStarLeave() {
+    setIsHovered(null);
+  }
+
   const renderStars = () => {
     const stars = [];
-    const maxRating = 5;
+    const maxRating = 4;
 
     for (let i = 1; i <= maxRating; i++) {
+      const isFilled = rating !== null && i <= rating;
+      const isStarHovered = isHovered !== null && i <= isHovered;
+
       let starIcon;
 
-      if (rating !== null && i <= rating) {
+      if (isFilled) {
         starIcon = (
-          <S.FilledStarIcon size="20" key={i} onClick={() => onStarClick(i)} />
+          <S.FilledStarIcon
+            size="20"
+            key={i}
+            onClick={() => onStarClick(i)}
+            onMouseEnter={() => handleStarHover(i)}
+            onMouseLeave={handleStarLeave}
+          />
         );
       } else {
         starIcon = (
@@ -62,6 +73,9 @@ export default function StarRating({
             size="20"
             key={i}
             onClick={() => onStarClick(i)}
+            onMouseEnter={() => handleStarHover(i)}
+            onMouseLeave={handleStarLeave}
+            hovered={isStarHovered ? "true" : "false"}
           />
         );
       }

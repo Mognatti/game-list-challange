@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { pallete } from "../../../../styles/styleVariables";
+import { breakPoints, pallete } from "../../../../styles/styleVariables";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 export const MiniCardContainer = styled.div`
@@ -21,9 +21,12 @@ export const MiniCardImg = styled.img`
   transition: 350ms;
 `;
 
-export const MiniCardTitleDiv = styled.div<{ hover: boolean }>`
-  opacity: ${(props) => (props.hover ? 1 : 0)};
+export const MiniCardTitleDiv = styled.div<{ hover: string }>`
+  opacity: ${(props) => (props.hover === "true" ? 1 : 0)};
   transition: 350ms;
+  @media (max-width: ${breakPoints.bigger}) {
+    opacity: 1;
+  }
 `;
 
 export const MiniCardTitle = styled.h3`

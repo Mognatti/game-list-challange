@@ -1,5 +1,7 @@
+import { pallete } from "../../../styles/styleVariables";
 import { LoginProps } from "../../../types";
 import * as S from "../styles";
+import { MoonLoader } from "react-spinners";
 
 export default function Login({
   inputs,
@@ -7,6 +9,7 @@ export default function Login({
   password,
   logIn,
   setLoginForm,
+  isLoginLoading,
 }: LoginProps) {
   async function logInUser(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
@@ -24,7 +27,7 @@ export default function Login({
         <S.Title>Entrar</S.Title>
         <S.InputsDiv>
           {inputs.map((item) => {
-            if (item.id !== "password confirmation")
+            if (item.id !== "password confirmation" && item.id !== "nick")
               return (
                 <div key={item.id}>
                   <S.Label htmlFor={item.id}>{item.label}</S.Label>
@@ -40,7 +43,11 @@ export default function Login({
               );
           })}
           <S.Button type="submit" onClick={(e) => logInUser(e)}>
-            Entrar
+            {isLoginLoading ? (
+              <MoonLoader size="20px" color={pallete.yellow} />
+            ) : (
+              "Entrar"
+            )}
           </S.Button>
         </S.InputsDiv>
       </S.Form>

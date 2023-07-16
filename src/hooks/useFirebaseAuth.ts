@@ -8,6 +8,7 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import {
   arrayRemove,
@@ -21,7 +22,12 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { FirebaseFavorite, Game, SignInProps, ratedGames } from "../types";
+import {
+  FirebaseFavorite,
+  Game,
+  CreateFirebaseUser,
+  ratedGames,
+} from "../types";
 
 export function useFirebaseAuth() {
   const [user, setUser] = useState<User | null>(auth.currentUser || null);
@@ -31,6 +37,7 @@ export function useFirebaseAuth() {
   >([]);
   const [firebaseRatedGames, setFirebaseRatedGames] = useState<ratedGames[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -129,25 +136,31 @@ export function useFirebaseAuth() {
     }
   }
 
-  async function createUser({ email, password }: SignInProps) {
+  async function createUser({ email, nickname, password }: CreateFirebaseUser) {
+    setIsLoginLoading(true);
     try {
       await setPersistence(auth, browserLocalPersistence);
       const res = await createUserWithEmailAndPassword(auth, email, password);
       if (res.user) {
-        setUser(res.user);
+        await updateProfile(res.user, {
+          displayName: nickname,
+        });
         await setDoc(doc(db, "user", res.user.uid), {
           uuid: res.user.uid,
         });
-        setIsLoading(false);
+        setUser(res.user);
+        setIsLoginLoading(false);
       }
     } catch (error: any) {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error("Erro: ", errorCode, " ", errorMessage);
+      setIsLoginLoading(false);
     }
   }
 
-  async function logIn({ email, password }: SignInProps) {
+  async function logIn({ email, password }: CreateFirebaseUser) {
+    setIsLoginLoading(true);
     try {
       await setPersistence(auth, browserLocalPersistence);
       const res = await signInWithEmailAndPassword(auth, email, password);
@@ -155,8 +168,10 @@ export function useFirebaseAuth() {
         setUser(res.user);
         setUserId(res.user.uid);
       }
+      setIsLoginLoading(false);
     } catch (error: any) {
       alert(error.message);
+      setIsLoginLoading(false);
     }
   }
 
@@ -180,6 +195,7 @@ export function useFirebaseAuth() {
       fetchFirebaseUserDocsData,
       fetchRatedGames,
       isLoading,
+      isLoginLoading,
       user,
       firebaseUserDocsData,
       firebaseRatedGames,

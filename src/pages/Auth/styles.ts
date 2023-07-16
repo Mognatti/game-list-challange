@@ -67,6 +67,10 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
   border-radius: 2px;
   border: none;

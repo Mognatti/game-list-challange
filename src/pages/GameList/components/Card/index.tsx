@@ -1,19 +1,9 @@
 import * as S from "./styles";
-import { Game } from "../../../../types";
+import { CardProps, Game } from "../../../../types";
 import { useState, useEffect } from "react";
 import AskToLoginModal from "../Modal";
 import StarRating from "./components/StarRating";
 import { useFirebaseAuth } from "../../../../hooks/useFirebaseAuth";
-
-export interface CardProps {
-  game: Game;
-  addToFirebaseFavorites: any;
-  removeFromFirebaseFavorites: any;
-  user: any;
-  firebaseUserDocsData: any;
-  postRating: any;
-  firebaseRatedGames: any;
-}
 
 export default function Card({
   game,
@@ -74,15 +64,40 @@ export default function Card({
   }
 
   const favIcon = markedAsFavorited ? (
-    <S.FilledHeartIcon size="25" onClick={() => favoriteRemover(game)} />
+    <S.FilledHeartIcon
+      size="25"
+      onClick={() => favoriteRemover(game)}
+      clicked={markedAsFavorited ? "true" : "false"}
+    />
   ) : (
-    <S.OutlineHeartIcon size="25" onClick={() => favoriteSetter(game)} />
+    <S.OutlineHeartIcon
+      size="25"
+      onClick={() => favoriteSetter(game)}
+      clicked={markedAsFavorited ? "false" : "true"}
+    />
   );
 
+  function handleMouseEnter(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    console.log("X", e.clientX);
+    console.log("Y", e.clientY);
+  }
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    console.log("X", e.nativeEvent.clientX);
+    console.log("Y", e.nativeEvent.clientY);
+  }
+
+  function handleMouseLeave(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    console.log("X", e.clientX);
+    console.log("Y", e.clientY);
+  }
   return (
     <>
       <AskToLoginModal {...{ showModal, setShowModal }} />
-      <S.CardContainer>
+      <S.CardContainer
+        onMouseEnter={(e) => handleMouseEnter(e)}
+        onMouseMove={(e) => handleMouseMove(e)}
+        onMouseLeave={(e) => handleMouseLeave(e)}
+      >
         <S.CardThumb
           src={game.thumbnail}
           alt={`Imagem do jogo ${game.title}`}

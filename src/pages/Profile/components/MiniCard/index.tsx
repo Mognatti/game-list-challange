@@ -24,12 +24,9 @@ export default function MiniCard(game: Game) {
       onMouseEnter={() => setImgHover(true)}
       onMouseLeave={() => setImgHover(false)}
     >
-      <a href={game.game_url}>
-        <S.MiniCardImg src={game.thumbnail} alt={game.title} />
-      </a>
-      <S.MiniCardTitleDiv hover={imgHover}>
+      <S.MiniCardImg src={game.thumbnail} alt={game.title} />
+      <S.MiniCardTitleDiv hover={imgHover ? "true" : "false"}>
         <S.MiniCardTitle>{game.title}</S.MiniCardTitle>
-
         {isFav ? (
           <S.FavIcon size="25" onClick={() => removeGame(game)} />
         ) : (

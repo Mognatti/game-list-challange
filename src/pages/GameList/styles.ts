@@ -26,6 +26,9 @@ export const NameAndRatingFilter = styled.div`
   gap: 24px;
   width: 100%;
   padding-bottom: 16px;
+  @media (max-width: ${breakPoints.big}) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const TextBox = styled.div<{ focused: string }>`

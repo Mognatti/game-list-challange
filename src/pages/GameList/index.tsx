@@ -10,7 +10,11 @@ import Loader from "../Loader";
 import Banner from "./components/Banner";
 import RatingFilter from "./components/RatingFilter";
 import { useFirebaseAuth } from "../../hooks/useFirebaseAuth";
-import { Game } from "../../types";
+import {
+  getFilteredList,
+  sortFilteredList,
+} from "./components/gameListFilters/gameListFilters";
+import ScrollTop from "../../components/ScrollToTop/ScrollTop";
 
 export default function GameList() {
   const [search, setSearch] = useState("");
@@ -31,77 +35,45 @@ export default function GameList() {
     },
   ] = useFirebaseAuth();
 
-  const searchGame = (gameTitle: string) => {
-    const reg = new RegExp(search, "i");
-    return reg.test(gameTitle);
-  };
-
-  const filterGame = (gameGenre: string) => {
-    if (filter !== null) {
-      return filter === gameGenre;
-    }
-    return true;
-  };
-
-  const getFilteredList = (games: any[]) => {
-    let updatedList: Game[];
-
-    if (isFilterByFavorites) {
-      const filteredFavs = games.flatMap((item: any) =>
-        item.favorites.filter(
-          (game: any) => searchGame(game.title) && filterGame(game.genre)
-        )
-      );
-      updatedList = filteredFavs;
-    } else {
-      const newGameList = games?.filter(
-        (game) => searchGame(game.title) && filterGame(game.genre)
-      );
-      updatedList = newGameList;
-    }
-
-    return updatedList;
-  };
-
-  const sortFilteredList = (filteredList: any) => {
-    if (filteredList) {
-      const sortedList = [...filteredList].sort((a, b) => {
-        const scoreA =
-          firebaseRatedGames?.find((item) => item.id === a.id)?.score || 0;
-        const scoreB =
-          firebaseRatedGames?.find((item) => item.id === b.id)?.score || 0;
-        if (scoreA === 0 || scoreB === 0) {
-          return scoreB - scoreA;
-        }
-        if (sortByRating) {
-          return scoreB - scoreA;
-        }
-        return scoreA - scoreB;
-      });
-      return sortedList;
-    }
-  };
   useEffect(() => {
     fetchRatedGames();
   }, [gameList, user]);
 
   useEffect(() => {
-    const favoriteExists =
+    const favoriteNotUndefined =
       firebaseUserDocsData.find((item) => "favorites" in item) !== undefined;
     if (user) {
       fetchFirebaseUserDocsData(user.uid);
     }
-    if (!favoriteExists) {
+    if (!favoriteNotUndefined) {
       const listToFilter: any[] = [];
       setSortedGameList(listToFilter);
     }
     if (gameList && !isFilterByFavorites) {
-      const listToFilter = getFilteredList(gameList);
-      const newGameList = sortFilteredList(listToFilter);
+      const listToFilter = getFilteredList(
+        isFilterByFavorites,
+        filter,
+        search,
+        gameList
+      );
+      const newGameList = sortFilteredList(
+        firebaseRatedGames,
+        sortByRating,
+        listToFilter
+      );
       if (newGameList) setSortedGameList(newGameList);
-    } else if (isFilterByFavorites && favoriteExists) {
-      const listToFilter = getFilteredList(firebaseUserDocsData);
-      const newGameList = sortFilteredList(listToFilter);
+    } else if (isFilterByFavorites && favoriteNotUndefined) {
+      const listToFilter = getFilteredList(
+        isFilterByFavorites,
+        filter,
+        search,
+        firebaseUserDocsData
+      );
+      const newGameList = sortFilteredList(
+        firebaseRatedGames,
+        sortByRating,
+        listToFilter
+      );
       if (newGameList) setSortedGameList(newGameList);
     }
   }, [gameList, search, filter, isFilterByFavorites, sortByRating]);
@@ -129,6 +101,7 @@ export default function GameList() {
               }}
             />
           </S.SearchContainer>
+          <ScrollTop />
           <Games
             games={sortedGameList}
             firebaseRatedGames={firebaseRatedGames}
