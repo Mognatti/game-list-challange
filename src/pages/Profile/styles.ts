@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { breakPoints, pallete, typografy } from "../../styles/styleVariables";
+import { pallete, typografy } from "../../styles/styleVariables";
 import { Link } from "react-router-dom";
 
 export const ProfileContainer = styled.div`
