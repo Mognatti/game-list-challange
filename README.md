@@ -25,10 +25,18 @@ A aplicação possui responsividade, possuindo uma apresentação diferente no d
 - [x] Incluir um campo de busca, que permite localizar jogos pelo título, com busca case insensitive
 - [x] Uma vez que tenha os dados em mãos, veja quais genre foram retornados e permita ao usuário selecionar um deles, e então filtre para exibir apenas jogos do gênero selecionado
 
-### Prints do projeto
+## Evolçução
+
+### Prints do projeto (FASE 1)
 
 ![Visão geral da home page](src/assets/prints/desktop-init.png)
+![Visão geral da página de erro](src/assets/prints/before-error-page.png)
+
+### Prints do projeto (FASE 2)
+![Visão geral da home page](src/assets/prints/before-desktop-init.png)
+![Profile](src/assets/prints/profile.png)
 ![Visão geral da página de erro](src/assets/prints/error-page.png)
+
 
 ### Link para acesso
 <p>O projeto já está disponível para ser acessado <a href="https://game-list-challenge.vercel.app">clicando aqui!</a> (clique com o botão do meio do mouse ou com o botao direito e selecione "Abrir em uma nova guia" para visitar o site)</p>
