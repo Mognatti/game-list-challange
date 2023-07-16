@@ -43,7 +43,7 @@ A aplicação possui responsividade, possuindo uma apresentação diferente no d
 - [x] Publicar seu projeto online para testarmos (na mesma url de antes)
 
 
-## Evolçução
+## Evolução
 
 ### Prints do projeto (FASE 1)
 
