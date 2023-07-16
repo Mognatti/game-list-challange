@@ -7,6 +7,8 @@ Caso a API retorne algum erro, a página de erro será mostrada e um de nossos i
 <p>Caso dê tudo certo e os dados sejam acessados, a página principal da aplicação irá aparecer e entregar os dados de maneira organizada. Além disso, o usuário pode filtrar os jogos pelo nome ou pelo gênero do jogo.
 A aplicação possui responsividade, possuindo uma apresentação diferente no destkop/tablet/mobile, de forma que a navegação seja adequada independentemente do dispositivo de acesso.</p>
 <p>Agora temos a função de criar conta e favoritar os jogos preferidos do usuário. Além disso, também é possível avaliar qualquer jogo!</p>
+
+<h3>Exitem alguns pontos que podem ser melhorados e que já foram identificados, mas infelizmente não tive tempo para deixar tudo exatamente como eu queria. De toda a forma, os requisitos foram cumpridos e não faltou esfroço para deixar tudo da melhor maneira possível. </h3>
 <br/>
 <h2 align="center"> 
 	✅... Projeto Finalizado ...✅
