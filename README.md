@@ -2,13 +2,13 @@
 
 <h3 align="center"> Aplicação React para listagem de jogos buscados em uma API </h3>
 <br/>
-<p>A aplicação permite que o usuário acesse um banco de dados através de uma API fornecida. Durante a busca por esses dados, uma página de carregamento é mostrada para o usuário, mas assim que os dados chegam (ou exista algum erro) essa página de carregamento some e dá espaço a uma nova página. 
+<p align='justify'>A aplicação permite que o usuário acesse um banco de dados através de uma API fornecida. Durante a busca por esses dados, uma página de carregamento é mostrada para o usuário, mas assim que os dados chegam (ou exista algum erro) essa página de carregamento some e dá espaço a uma nova página. 
 Caso a API retorne algum erro, a página de erro será mostrada e um de nossos incríveis ajudantes --o macaquinho consertador-- estará lá para tentar consertar o problema!</p>
-<p>Caso dê tudo certo e os dados sejam acessados, a página principal da aplicação irá aparecer e entregar os dados de maneira organizada. Além disso, o usuário pode filtrar os jogos pelo nome ou pelo gênero do jogo.
+<p align='justify'>Caso dê tudo certo e os dados sejam acessados, a página principal da aplicação irá aparecer e entregar os dados de maneira organizada. Além disso, o usuário pode filtrar os jogos pelo nome ou pelo gênero do jogo.
 A aplicação possui responsividade, possuindo uma apresentação diferente no destkop/tablet/mobile, de forma que a navegação seja adequada independentemente do dispositivo de acesso.</p>
-<p>Agora temos a função de criar conta e favoritar os jogos preferidos do usuário. Além disso, também é possível avaliar qualquer jogo!</p>
+<p align='justify'>Agora temos a função de criar conta e favoritar os jogos preferidos do usuário. Além disso, também é possível avaliar qualquer jogo!</p>
 
-<h3>Exitem alguns pontos que podem ser melhorados e que já foram identificados, mas infelizmente não tive tempo para deixar tudo exatamente como eu queria. De toda a forma, os requisitos foram cumpridos e não faltou esfroço para deixar tudo da melhor maneira possível. </h3>
+<h3 align='justify'>Exitem alguns pontos que podem ser melhorados e que já foram identificados, mas infelizmente não tive tempo para deixar tudo exatamente como eu queria. De toda a forma, os requisitos foram cumpridos e não faltou esfroço para deixar tudo da melhor maneira possível. </h3>
 <br/>
 <h2 align="center"> 
 	✅... Projeto Finalizado ...✅
